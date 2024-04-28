@@ -1,5 +1,3 @@
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ScrollBar;
-using System.Windows.Forms;
 using System.Data;
 
 namespace Server_DataBase
@@ -49,7 +47,7 @@ namespace Server_DataBase
             HomeButton.FlatAppearance.BorderColor = Color.FromArgb(34, 32, 52);
             HomePanel.Visible = false;
             HomePanel.Enabled = false;
-            //ужас
+            //ужас 
         }
 
         private void ExitButton_Click(object sender, EventArgs e)
