@@ -66,10 +66,10 @@ namespace Server_DataBase
                     UDTR data = dataList[i];
                     stwUDT.WriteLine($"{data.User},{data.Date},{data.Time},{data.ReasonID}");
 
-                    if (!existingReasons.ContainsKey(data.Reason))
+                    if (!existingReasons.ContainsKey(data.Reason.ToLower()))
                     {
                         int newReasonID = existingReasons.Count + 1;
-                        existingReasons.Add(data.Reason, newReasonID);
+                        existingReasons.Add(data.Reason.ToLower(), newReasonID);
                         stwRN.WriteLine($"{newReasonID},{data.Reason}");
                     }
                 }

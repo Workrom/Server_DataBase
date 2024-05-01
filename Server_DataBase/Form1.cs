@@ -11,7 +11,9 @@ namespace Server_DataBase
         {
             InitializeComponent();
             Read_DataGridView.RowHeadersVisible = false;
+            Write_Timetxb.KeyPress += Write_Timetxb_KeyPress;
 
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -101,7 +103,77 @@ namespace Server_DataBase
 
             return dataTable;
         }
+
+        private void Write_Button_Click(object sender, EventArgs e)
+        {
+            Write_Button.BackgroundImage = Properties.Resources.Write_Button_On;
+            Find_Button.BackgroundImage = Properties.Resources.Find_Button_Off;
+
+            Server_WritePanel.Visible = true;
+            Server_SearchPanel.Visible = false;
+        }
+
+        private void Find_Button_Click(object sender, EventArgs e)
+        {
+            Write_Button.BackgroundImage = Properties.Resources.Write_Button_Off;
+            Find_Button.BackgroundImage = Properties.Resources.Find_Button_On;
+
+            Server_WritePanel.Visible = false;
+            Server_SearchPanel.Visible = true;
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+        private async void Write_Timetxb_KeyPress(object? sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ':')
+            {
+                e.Handled = true;
+                return;
+            }
+            if (Write_Timetxb.Text.Length >= 5 && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+                return;
+            }
+            if (char.IsDigit(e.KeyChar))
+            {
+                if (Write_Timetxb.Text.Length == 2 && e.KeyChar != ':')
+                {
+                    Write_Timetxb.Text += ":" + e.KeyChar;
+                    Write_Timetxb.SelectionStart = Write_Timetxb.Text.Length;
+                    e.Handled = true;
+                }
+                else if (Write_Timetxb.Text.Length == 2 && e.KeyChar == ':')
+                {
+                    e.Handled = true;
+                }
+                else if (Write_Timetxb.Text.Length == 3 && e.KeyChar == ':')
+                {
+                    e.Handled = true;
+                }
+            }
+            else if (e.KeyChar == ':' && Write_Timetxb.Text.Length == 5)
+            {
+                e.Handled = true;
+            }
+            if (char.IsDigit(e.KeyChar))
+            {
+                await Task.Delay(100);
+                string[] parts = Write_Timetxb.Text.Split(':');
+                if (parts.Length == 2 && parts[0].Length == 2 && parts[1].Length == 2)
+                {
+                    int hours = Math.Min(int.Parse(parts[0]), 23);
+                    int minutes = Math.Min(int.Parse(parts[1]), 59);
+                    Write_Timetxb.Text = $"{hours:D2}:{minutes:D2}";
+                    Write_Timetxb.SelectionStart = Write_Timetxb.Text.Length;
+                    e.Handled = true;
+                }
+            }
+        }
     }
+
 }
 
 
