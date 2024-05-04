@@ -221,7 +221,6 @@
             Write_ClearAllBut.TabIndex = 2;
             Write_ClearAllBut.Text = "Clear all";
             Write_ClearAllBut.UseVisualStyleBackColor = true;
-            Write_ClearAllBut.Click += button1_Click;
             // 
             // dataGridView1
             // 

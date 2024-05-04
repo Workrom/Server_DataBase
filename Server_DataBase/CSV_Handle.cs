@@ -17,12 +17,16 @@ namespace Server_DataBase
 
     internal class CSV_Handle
     {
+
+        //UDTR - User Date Time Reason
+
         public List<UDTR> DataList { get; } = new List<UDTR>();
         private string UDTpath = "C:\\Users\\Workrom\\source\\repos\\Server_DataBase\\Server_DataBase\\UDT.csv";
         private string RNpath = "C:\\Users\\Workrom\\source\\repos\\Server_DataBase\\Server_DataBase\\RN.csv";
 
         public bool isLoaded(string user, string date, string time, string reason, int reasonID)
         {
+            //probably a better way to do this but i am short on time
             if (string.IsNullOrWhiteSpace(user) || string.IsNullOrWhiteSpace(date) ||
                 string.IsNullOrWhiteSpace(time) || string.IsNullOrWhiteSpace(reason) || reasonID <= 0)
             {
@@ -68,6 +72,8 @@ namespace Server_DataBase
 
                     if (!existingReasons.ContainsKey(data.Reason.ToLower()))
                     {
+                        //create a new id if thereason is new || if the reason like this already exists take the same id
+                        //(probably use regex for this one we`ll see)
                         int newReasonID = existingReasons.Count + 1;
                         existingReasons.Add(data.Reason.ToLower(), newReasonID);
                         stwRN.WriteLine($"{newReasonID},{data.Reason}");
@@ -86,6 +92,7 @@ namespace Server_DataBase
 
             foreach (var data in UDTstr)
             {
+                //COmpare if dictionary with reason_id`s correspond to UDT id`s || if yes thatn we take the reason with that id
                 string reason = reasons.ContainsKey(data.ReasonID) ? reasons[data.ReasonID] : "Unknown";
                 bruh.Append($"{data.User}, {data.Date}, {data.Time}, {reason}\n");
             }

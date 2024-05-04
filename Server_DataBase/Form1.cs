@@ -18,6 +18,7 @@ namespace Server_DataBase
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //ill think of a better way later
             ServerPanel.Visible = false;
             ServerPanel.Enabled = false;
             HomeButton.BackgroundImage = Properties.Resources.Home_Button_On;
@@ -76,16 +77,15 @@ namespace Server_DataBase
         public void DisplayDataInDataGridView()
         {
             string mergedData = CSV.Read();
-
             Read_DataGridView.AutoGenerateColumns = true;
-
             DataTable dataTable = ParseMergedStringToDataTable(mergedData);
-
             Read_DataGridView.DataSource = dataTable;
         }
 
         private DataTable ParseMergedStringToDataTable(string mergedData)
         {
+
+            //again i think i can borrow CSV_Handle.write somehow but short on time
             DataTable dataTable = new DataTable();
 
             string[] columnHeaders = mergedData.Split('\n')[0].Split(',');
@@ -121,12 +121,9 @@ namespace Server_DataBase
             Server_WritePanel.Visible = false;
             Server_SearchPanel.Visible = true;
         }
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
         private async void Write_Timetxb_KeyPress(object? sender, KeyPressEventArgs e)
         {
+            //why error handle when error cannot happend :) (probably not true but still i tried)
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ':')
             {
                 e.Handled = true;
@@ -160,10 +157,12 @@ namespace Server_DataBase
             }
             if (char.IsDigit(e.KeyChar))
             {
+                //do not allow to type non valid time like 26:77 
                 await Task.Delay(100);
                 string[] parts = Write_Timetxb.Text.Split(':');
                 if (parts.Length == 2 && parts[0].Length == 2 && parts[1].Length == 2)
                 {
+                    //split into HH and mm and cool way to select non valid to valid time
                     int hours = Math.Min(int.Parse(parts[0]), 23);
                     int minutes = Math.Min(int.Parse(parts[1]), 59);
                     Write_Timetxb.Text = $"{hours:D2}:{minutes:D2}";
