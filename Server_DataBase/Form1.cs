@@ -1,4 +1,5 @@
 using System.Data;
+using System.Windows.Forms;
 
 namespace Server_DataBase
 {
@@ -6,11 +7,12 @@ namespace Server_DataBase
     {
 
         CSV_Handle CSV = new CSV_Handle();
-
         public Form1()
         {
             InitializeComponent();
             Read_DataGridView.RowHeadersVisible = false;
+            Write_DataGridView.RowHeadersVisible = false;
+
             Write_Timetxb.KeyPress += Write_Timetxb_KeyPress;
 
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -18,9 +20,11 @@ namespace Server_DataBase
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //ill think of a better way later
+            PopulateComboBoxWithReasons();
+            //i`ll think of a better way later
             ServerPanel.Visible = false;
             ServerPanel.Enabled = false;
+            Write_Button.BackgroundImage = Properties.Resources.Write_Button_On;
             HomeButton.BackgroundImage = Properties.Resources.Home_Button_On;
             ServerButton.BackgroundImage = Properties.Resources.Server_Button_Off;
             ServerButton.FlatAppearance.BorderColor = Color.FromArgb(34, 32, 52);
@@ -76,32 +80,8 @@ namespace Server_DataBase
 
         public void DisplayDataInDataGridView()
         {
-            string mergedData = CSV.Read();
             Read_DataGridView.AutoGenerateColumns = true;
-            DataTable dataTable = ParseMergedStringToDataTable(mergedData);
-            Read_DataGridView.DataSource = dataTable;
-        }
-
-        private DataTable ParseMergedStringToDataTable(string mergedData)
-        {
-
-            //again i think i can borrow CSV_Handle.write somehow but short on time
-            DataTable dataTable = new DataTable();
-
-            string[] columnHeaders = mergedData.Split('\n')[0].Split(',');
-            foreach (string header in columnHeaders)
-            {
-                dataTable.Columns.Add(header.Trim());
-            }
-
-            string[] rows = mergedData.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-            foreach (string row in rows.Skip(1))
-            {
-                string[] rowData = row.Split(',');
-                dataTable.Rows.Add(rowData);
-            }
-
-            return dataTable;
+            Read_DataGridView.DataSource = CSV.Read();
         }
 
         private void Write_Button_Click(object sender, EventArgs e)
@@ -121,6 +101,18 @@ namespace Server_DataBase
             Server_WritePanel.Visible = false;
             Server_SearchPanel.Visible = true;
         }
+        public void PopulateComboBoxWithReasons()
+        {
+            DataTable dataTable = CSV.Read();
+
+            var Reasons = dataTable.AsEnumerable().Select(x => x.Field<string>("Reason")).Distinct();
+            Write_ReasonCombobox.Items.Clear();
+            foreach (var reason in Reasons)
+            {
+                Write_ReasonCombobox.Items.Add(reason);
+            }
+        }
+
         private async void Write_Timetxb_KeyPress(object? sender, KeyPressEventArgs e)
         {
             //why error handle when error cannot happend :) (probably not true but still i tried)
@@ -171,8 +163,37 @@ namespace Server_DataBase
                 }
             }
         }
-    }
+        private void LoadInDGV()
+        {
+            string user = Write_Usertxb.Text;
+            string date = Write_datetimepicker.Text;
+            string time = Write_Timetxb.Text;
+            string reason = Write_ReasonCombobox.Text;
 
+            Write_DataGridView.AutoGenerateColumns = true;
+            Write_DataGridView.DataSource = CSV.Load(user, date, time, reason);
+
+        }
+        private void Write_LoadBut_Click(object sender, EventArgs e)
+        {
+            LoadInDGV();
+        }
+        private void WriteBut_Click(object sender, EventArgs e)
+        {
+            CSV.Write(CSV.dataTable);
+        }
+        private void Write_ClearBut_Click(object sender, EventArgs e)
+        {
+            if (Write_DataGridView.Rows.Count > 0)
+            {
+                Write_DataGridView.Rows.RemoveAt(Write_DataGridView.Rows.Count - 1);
+            }
+        }
+        private void Write_ClearAllBut_Click(object sender, EventArgs e)
+        {
+            Write_DataGridView.Rows.Clear();
+        }
+    }
 }
 
 

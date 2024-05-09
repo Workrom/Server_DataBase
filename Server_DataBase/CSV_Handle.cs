@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,38 +20,35 @@ namespace Server_DataBase
     {
 
         //UDTR - User Date Time Reason
-
-        public List<UDTR> DataList { get; } = new List<UDTR>();
+        public DataTable dataTable = new DataTable();
         private string UDTpath = "C:\\Users\\Workrom\\source\\repos\\Server_DataBase\\Server_DataBase\\UDT.csv";
         private string RNpath = "C:\\Users\\Workrom\\source\\repos\\Server_DataBase\\Server_DataBase\\RN.csv";
 
-        public bool isLoaded(string user, string date, string time, string reason, int reasonID)
+        public DataTable Load(string user, string date, string time, string reason)
         {
-            //probably a better way to do this but i am short on time
-            if (string.IsNullOrWhiteSpace(user) || string.IsNullOrWhiteSpace(date) ||
-                string.IsNullOrWhiteSpace(time) || string.IsNullOrWhiteSpace(reason) || reasonID <= 0)
+            if (dataTable == null)
             {
-                return false;
+                dataTable = InitializeDataTable();
             }
 
-            UDTR newData = new UDTR
-            {
-                User = user,
-                Date = date,
-                Time = time,
-                Reason = reason,
-                ReasonID = reasonID
-            };
-            DataList.Add(newData);
-            return true;
+            // Add a new row with the provided data
+            DataRow newRow = dataTable.NewRow();
+            newRow["User"] = user;
+            newRow["Date"] = date;
+            newRow["Time"] = time;
+            newRow["Reason"] = reason;
+            dataTable.Rows.Add(newRow);
+
+            return dataTable;
         }
 
-        public void Write(List<UDTR> dataList)
+        public void Write(DataTable dataTable)
         {
-            if (dataList == null || dataList.Count == 0)
+            if (dataTable == null || dataTable.Rows.Count == 0)
             {
                 return;
             }
+
             var existingReasons = new Dictionary<string, int>();
 
             using (var reader = new StreamReader(RNpath))
@@ -59,44 +57,60 @@ namespace Server_DataBase
                 while ((line = reader.ReadLine()) != null)
                 {
                     string[] parts = line.Split(',');
-                    existingReasons.Add(parts[1], int.Parse(parts[0]));
+                    existingReasons.Add(parts[1].Trim().ToLower(), int.Parse(parts[0]));
                 }
             }
+
             using (StreamWriter stwUDT = new StreamWriter(UDTpath, true))
             using (StreamWriter stwRN = new StreamWriter(RNpath, true))
             {
-                for (int i = 0; i < dataList.Count; i++)
+                foreach (DataRow row in dataTable.Rows)
                 {
-                    UDTR data = dataList[i];
-                    stwUDT.WriteLine($"{data.User},{data.Date},{data.Time},{data.ReasonID}");
+                    string user = row["User"].ToString();
+                    string date = row["Date"].ToString();
+                    string time = row["Time"].ToString();
+                    string reason = row["Reason"].ToString().Trim().ToLower();
 
-                    if (!existingReasons.ContainsKey(data.Reason.ToLower()))
+                    stwUDT.WriteLine($"{user},{date},{time},{existingReasons[reason]}");
+
+                    if (!existingReasons.ContainsKey(reason))
                     {
-                        //create a new id if thereason is new || if the reason like this already exists take the same id
-                        //(probably use regex for this one we`ll see)
+                        // Create a new ID if the reason is new
                         int newReasonID = existingReasons.Count + 1;
-                        existingReasons.Add(data.Reason.ToLower(), newReasonID);
-                        stwRN.WriteLine($"{newReasonID},{data.Reason}");
+                        existingReasons.Add(reason, newReasonID);
+                        stwRN.WriteLine($"{newReasonID},{reason}");
                     }
                 }
             }
         }
-
-        public string Read()
+        private DataTable InitializeDataTable()
         {
-            StringBuilder bruh = new StringBuilder();
-            bruh.AppendLine("User, Date, Time, Reason, ReasonID");
+            DataTable dt = new DataTable();
+            dt.Columns.Add("User", typeof(string));
+            dt.Columns.Add("Date", typeof(string));
+            dt.Columns.Add("Time", typeof(string));
+            dt.Columns.Add("Reason", typeof(string));
+            return dt;
+        }
+        public DataTable Read()
+        {
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("User");
+            dataTable.Columns.Add("Date");
+            dataTable.Columns.Add("Time");
+            dataTable.Columns.Add("Reason");
 
             var UDTstr = File.ReadLines(UDTpath).Skip(1).Select(LINE => LINE.Split(',')).Select(LINES => new UDTR { User = LINES[0], Date = LINES[1], Time = LINES[2], ReasonID = int.Parse(LINES[3]) });
             var reasons = File.ReadLines(RNpath).Skip(1).Select(line => line.Split(',')).ToDictionary(parts => int.Parse(parts[0]), parts => parts[1]);
 
             foreach (var data in UDTstr)
             {
-                //COmpare if dictionary with reason_id`s correspond to UDT id`s || if yes thatn we take the reason with that id
+                //COmpare if dictionary with reason_id`s correspond to UDT id`s
+                //if yes thatn we take the reason with that id
                 string reason = reasons.ContainsKey(data.ReasonID) ? reasons[data.ReasonID] : "Unknown";
-                bruh.Append($"{data.User}, {data.Date}, {data.Time}, {reason}\n");
+                dataTable.Rows.Add(data.User, data.Date, data.Time, reason);
             }
-            return bruh.ToString();
+            return dataTable;
         }
     }
 }

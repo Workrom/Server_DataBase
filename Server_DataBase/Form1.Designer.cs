@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             ServerPanel = new Panel();
+            Server_MainPanel = new Panel();
+            Find_Button = new Button();
+            Write_Button = new Button();
             Server_WritePanel = new Panel();
             Write_Timetxb = new TextBox();
             Write_datetimepicker = new DateTimePicker();
@@ -44,33 +47,30 @@
             WriteBut = new Button();
             Write_ClearBut = new Button();
             Write_ClearAllBut = new Button();
-            dataGridView1 = new DataGridView();
+            Write_DataGridView = new DataGridView();
             Server_SearchPanel = new Panel();
             Read_Button = new Button();
             Read_DataGridView = new DataGridView();
-            Server_MainPanel = new Panel();
-            Find_Button = new Button();
-            Write_Button = new Button();
             HomeButton = new Button();
             ServerButton = new Button();
             HomePanel = new Panel();
             ExitButton = new Button();
             Button_Gif = new PictureBox();
             ServerPanel.SuspendLayout();
+            Server_MainPanel.SuspendLayout();
             Server_WritePanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Write_DataGridView).BeginInit();
             Server_SearchPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Read_DataGridView).BeginInit();
-            Server_MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Button_Gif).BeginInit();
             SuspendLayout();
             // 
             // ServerPanel
             // 
             ServerPanel.BackColor = Color.Black;
+            ServerPanel.Controls.Add(Server_MainPanel);
             ServerPanel.Controls.Add(Server_WritePanel);
             ServerPanel.Controls.Add(Server_SearchPanel);
-            ServerPanel.Controls.Add(Server_MainPanel);
             ServerPanel.Enabled = false;
             ServerPanel.Location = new Point(10, 50);
             ServerPanel.Margin = new Padding(3, 2, 3, 2);
@@ -78,6 +78,47 @@
             ServerPanel.Size = new Size(992, 439);
             ServerPanel.TabIndex = 0;
             ServerPanel.Visible = false;
+            // 
+            // Server_MainPanel
+            // 
+            Server_MainPanel.BackColor = Color.FromArgb(48, 96, 130);
+            Server_MainPanel.Controls.Add(Find_Button);
+            Server_MainPanel.Controls.Add(Write_Button);
+            Server_MainPanel.Location = new Point(3, 2);
+            Server_MainPanel.Margin = new Padding(3, 2, 3, 2);
+            Server_MainPanel.Name = "Server_MainPanel";
+            Server_MainPanel.Size = new Size(199, 435);
+            Server_MainPanel.TabIndex = 3;
+            // 
+            // Find_Button
+            // 
+            Find_Button.BackColor = Color.FromArgb(48, 96, 130);
+            Find_Button.BackgroundImage = Properties.Resources.Find_Button_Off;
+            Find_Button.BackgroundImageLayout = ImageLayout.Stretch;
+            Find_Button.FlatAppearance.BorderColor = Color.FromArgb(48, 96, 130);
+            Find_Button.FlatStyle = FlatStyle.Flat;
+            Find_Button.ForeColor = Color.Black;
+            Find_Button.Location = new Point(0, 214);
+            Find_Button.Margin = new Padding(3, 2, 3, 2);
+            Find_Button.Name = "Find_Button";
+            Find_Button.Size = new Size(199, 76);
+            Find_Button.TabIndex = 1;
+            Find_Button.UseVisualStyleBackColor = false;
+            Find_Button.Click += Find_Button_Click;
+            // 
+            // Write_Button
+            // 
+            Write_Button.BackgroundImage = Properties.Resources.Write_Button_Off;
+            Write_Button.BackgroundImageLayout = ImageLayout.Stretch;
+            Write_Button.FlatAppearance.BorderColor = Color.FromArgb(48, 96, 130);
+            Write_Button.FlatStyle = FlatStyle.Flat;
+            Write_Button.Location = new Point(0, 139);
+            Write_Button.Margin = new Padding(3, 2, 3, 2);
+            Write_Button.Name = "Write_Button";
+            Write_Button.Size = new Size(199, 76);
+            Write_Button.TabIndex = 0;
+            Write_Button.UseVisualStyleBackColor = true;
+            Write_Button.Click += Write_Button_Click;
             // 
             // Server_WritePanel
             // 
@@ -95,7 +136,7 @@
             Server_WritePanel.Controls.Add(WriteBut);
             Server_WritePanel.Controls.Add(Write_ClearBut);
             Server_WritePanel.Controls.Add(Write_ClearAllBut);
-            Server_WritePanel.Controls.Add(dataGridView1);
+            Server_WritePanel.Controls.Add(Write_DataGridView);
             Server_WritePanel.Location = new Point(208, 3);
             Server_WritePanel.Name = "Server_WritePanel";
             Server_WritePanel.Size = new Size(777, 430);
@@ -103,18 +144,20 @@
             // 
             // Write_Timetxb
             // 
+            Write_Timetxb.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             Write_Timetxb.Location = new Point(218, 161);
             Write_Timetxb.Name = "Write_Timetxb";
-            Write_Timetxb.PlaceholderText = "           00:00";
-            Write_Timetxb.Size = new Size(100, 23);
+            Write_Timetxb.PlaceholderText = "00:00";
+            Write_Timetxb.Size = new Size(129, 23);
             Write_Timetxb.TabIndex = 14;
+            Write_Timetxb.TextAlign = HorizontalAlignment.Center;
             // 
             // Write_datetimepicker
             // 
             Write_datetimepicker.Format = DateTimePickerFormat.Short;
             Write_datetimepicker.Location = new Point(13, 162);
             Write_datetimepicker.Name = "Write_datetimepicker";
-            Write_datetimepicker.Size = new Size(101, 23);
+            Write_datetimepicker.Size = new Size(116, 23);
             Write_datetimepicker.TabIndex = 13;
             // 
             // Write_TimeLabel
@@ -141,15 +184,16 @@
             // 
             // Write_ReasonCombobox
             // 
+            Write_ReasonCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
             Write_ReasonCombobox.FormattingEnabled = true;
-            Write_ReasonCombobox.Location = new Point(218, 47);
+            Write_ReasonCombobox.Location = new Point(218, 41);
             Write_ReasonCombobox.Name = "Write_ReasonCombobox";
             Write_ReasonCombobox.Size = new Size(129, 23);
             Write_ReasonCombobox.TabIndex = 10;
             // 
             // Write_Reasontxb
             // 
-            Write_Reasontxb.Location = new Point(218, 76);
+            Write_Reasontxb.Location = new Point(218, 70);
             Write_Reasontxb.Name = "Write_Reasontxb";
             Write_Reasontxb.PlaceholderText = "Other option";
             Write_Reasontxb.Size = new Size(129, 23);
@@ -194,6 +238,7 @@
             Write_LoadBut.TabIndex = 5;
             Write_LoadBut.Text = "Load";
             Write_LoadBut.UseVisualStyleBackColor = true;
+            Write_LoadBut.Click += Write_LoadBut_Click;
             // 
             // WriteBut
             // 
@@ -203,6 +248,7 @@
             WriteBut.TabIndex = 4;
             WriteBut.Text = "Write";
             WriteBut.UseVisualStyleBackColor = true;
+            WriteBut.Click += WriteBut_Click;
             // 
             // Write_ClearBut
             // 
@@ -212,6 +258,7 @@
             Write_ClearBut.TabIndex = 3;
             Write_ClearBut.Text = "Clear";
             Write_ClearBut.UseVisualStyleBackColor = true;
+            Write_ClearBut.Click += Write_ClearBut_Click;
             // 
             // Write_ClearAllBut
             // 
@@ -221,24 +268,25 @@
             Write_ClearAllBut.TabIndex = 2;
             Write_ClearAllBut.Text = "Clear all";
             Write_ClearAllBut.UseVisualStyleBackColor = true;
+            Write_ClearAllBut.Click += Write_ClearAllBut_Click;
             // 
-            // dataGridView1
+            // Write_DataGridView
             // 
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.BackgroundColor = SystemColors.ActiveCaptionText;
-            dataGridView1.BorderStyle = BorderStyle.Fixed3D;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(392, 3);
-            dataGridView1.Margin = new Padding(3, 2, 3, 2);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.ReadOnly = true;
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.RowTemplate.Height = 29;
-            dataGridView1.ScrollBars = ScrollBars.Vertical;
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            dataGridView1.Size = new Size(385, 428);
-            dataGridView1.TabIndex = 1;
+            Write_DataGridView.AllowUserToAddRows = false;
+            Write_DataGridView.AllowUserToDeleteRows = false;
+            Write_DataGridView.BackgroundColor = SystemColors.ActiveCaptionText;
+            Write_DataGridView.BorderStyle = BorderStyle.Fixed3D;
+            Write_DataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Write_DataGridView.Location = new Point(392, 3);
+            Write_DataGridView.Margin = new Padding(3, 2, 3, 2);
+            Write_DataGridView.Name = "Write_DataGridView";
+            Write_DataGridView.ReadOnly = true;
+            Write_DataGridView.RowHeadersWidth = 51;
+            Write_DataGridView.RowTemplate.Height = 29;
+            Write_DataGridView.ScrollBars = ScrollBars.Vertical;
+            Write_DataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            Write_DataGridView.Size = new Size(385, 428);
+            Write_DataGridView.TabIndex = 1;
             // 
             // Server_SearchPanel
             // 
@@ -256,7 +304,7 @@
             Read_Button.Location = new Point(3, 330);
             Read_Button.Margin = new Padding(3, 2, 3, 2);
             Read_Button.Name = "Read_Button";
-            Read_Button.Size = new Size(382, 22);
+            Read_Button.Size = new Size(344, 22);
             Read_Button.TabIndex = 1;
             Read_Button.Text = "Read";
             Read_Button.UseVisualStyleBackColor = true;
@@ -269,7 +317,7 @@
             Read_DataGridView.BackgroundColor = SystemColors.ActiveCaptionText;
             Read_DataGridView.BorderStyle = BorderStyle.Fixed3D;
             Read_DataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Read_DataGridView.Location = new Point(391, 2);
+            Read_DataGridView.Location = new Point(373, 2);
             Read_DataGridView.Margin = new Padding(3, 2, 3, 2);
             Read_DataGridView.Name = "Read_DataGridView";
             Read_DataGridView.ReadOnly = true;
@@ -277,49 +325,8 @@
             Read_DataGridView.RowTemplate.Height = 29;
             Read_DataGridView.ScrollBars = ScrollBars.Vertical;
             Read_DataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            Read_DataGridView.Size = new Size(385, 428);
+            Read_DataGridView.Size = new Size(403, 428);
             Read_DataGridView.TabIndex = 0;
-            // 
-            // Server_MainPanel
-            // 
-            Server_MainPanel.BackColor = Color.FromArgb(48, 96, 130);
-            Server_MainPanel.Controls.Add(Find_Button);
-            Server_MainPanel.Controls.Add(Write_Button);
-            Server_MainPanel.Location = new Point(3, 2);
-            Server_MainPanel.Margin = new Padding(3, 2, 3, 2);
-            Server_MainPanel.Name = "Server_MainPanel";
-            Server_MainPanel.Size = new Size(199, 435);
-            Server_MainPanel.TabIndex = 3;
-            // 
-            // Find_Button
-            // 
-            Find_Button.BackColor = Color.FromArgb(48, 96, 130);
-            Find_Button.BackgroundImage = Properties.Resources.Find_Button_Off;
-            Find_Button.BackgroundImageLayout = ImageLayout.Stretch;
-            Find_Button.FlatAppearance.BorderColor = Color.FromArgb(48, 96, 130);
-            Find_Button.FlatStyle = FlatStyle.Flat;
-            Find_Button.ForeColor = Color.Black;
-            Find_Button.Location = new Point(0, 214);
-            Find_Button.Margin = new Padding(3, 2, 3, 2);
-            Find_Button.Name = "Find_Button";
-            Find_Button.Size = new Size(199, 76);
-            Find_Button.TabIndex = 1;
-            Find_Button.UseVisualStyleBackColor = false;
-            Find_Button.Click += Find_Button_Click;
-            // 
-            // Write_Button
-            // 
-            Write_Button.BackgroundImage = Properties.Resources.Write_Button_Off;
-            Write_Button.BackgroundImageLayout = ImageLayout.Stretch;
-            Write_Button.FlatAppearance.BorderColor = Color.FromArgb(48, 96, 130);
-            Write_Button.FlatStyle = FlatStyle.Flat;
-            Write_Button.Location = new Point(0, 139);
-            Write_Button.Margin = new Padding(3, 2, 3, 2);
-            Write_Button.Name = "Write_Button";
-            Write_Button.Size = new Size(199, 76);
-            Write_Button.TabIndex = 0;
-            Write_Button.UseVisualStyleBackColor = true;
-            Write_Button.Click += Write_Button_Click;
             // 
             // HomeButton
             // 
@@ -406,12 +413,12 @@
             StartPosition = FormStartPosition.CenterScreen;
             Load += Form1_Load;
             ServerPanel.ResumeLayout(false);
+            Server_MainPanel.ResumeLayout(false);
             Server_WritePanel.ResumeLayout(false);
             Server_WritePanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Write_DataGridView).EndInit();
             Server_SearchPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Read_DataGridView).EndInit();
-            Server_MainPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Button_Gif).EndInit();
             ResumeLayout(false);
         }
@@ -431,7 +438,7 @@
         private PictureBox Button_Gif;
         private Button Read_Button;
         private Panel Server_WritePanel;
-        private DataGridView dataGridView1;
+        private DataGridView Write_DataGridView;
         private Button Write_ClearAllBut;
         private Button Write_LoadBut;
         private Button WriteBut;
