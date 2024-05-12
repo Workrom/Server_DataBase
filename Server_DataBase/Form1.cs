@@ -40,52 +40,46 @@ namespace Server_DataBase
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
-        private void TogglePanel_Main(Panel panelToShow, Button buttonToShow, Panel panelToHide, Button buttonToHide)
-        {
-            buttonToShow.BackgroundImage = Properties.Resources.Server_Button_On;
-            buttonToShow.FlatAppearance.BorderColor = Color.Black;
-            panelToShow.Visible = true;
-            panelToShow.Enabled = true;
-
-            buttonToHide.BackgroundImage = Properties.Resources.Home_Button_Off;
-            buttonToHide.FlatAppearance.BorderColor = Color.FromArgb(34, 32, 52);
-            panelToHide.Visible = false;
-            panelToHide.Enabled = false;
-        }
-        private void TogglePanel_Server(Panel panelToShow, Button buttonToShow, Panel panelToHide, Button buttonToHide)
-        {
-            buttonToShow.BackgroundImage = Properties.Resources.Write_Button_On;
-            panelToShow.Visible = true;
-            panelToShow.Enabled = true;
-
-            buttonToHide.BackgroundImage = Properties.Resources.Find_Button_Off;
-            panelToHide.Visible = false;
-            panelToHide.Enabled = false;
-        }
         private void HomeButton_Click(object sender, EventArgs e)
         {
             //show-HomePanel and HomeButton
             //hide-ServerPanel and ServerButton
-            TogglePanel_Main(HomePanel, HomeButton, ServerPanel, ServerButton);
+            HomeButton.BackgroundImage = Properties.Resources.Home_Button_On;
+            ServerButton.BackgroundImage = Properties.Resources.Server_Button_Off;
+            HomeButton.FlatAppearance.BorderColor = Color.Black;
+            ServerButton.FlatAppearance.BorderColor = Color.FromArgb(34, 32, 52);
+            HomePanel.Visible = true;
+            ServerPanel.Visible = false;
         }
 
         private void ServerButton_Click(object sender, EventArgs e)
         {
             //show-ServerPanel and ServerButton
             //hide-HomePanel and HomeButton
-            TogglePanel_Main(ServerPanel, ServerButton, HomePanel, HomeButton);
+            HomeButton.BackgroundImage = Properties.Resources.Home_Button_Off;
+            ServerButton.BackgroundImage = Properties.Resources.Server_Button_On;
+            ServerButton.FlatAppearance.BorderColor = Color.Black;
+            HomeButton.FlatAppearance.BorderColor = Color.FromArgb(34, 32, 52);
+            HomePanel.Visible = false;
+            ServerPanel.Visible = true;
         }
         private void Write_Button_Click(object sender, EventArgs e)
         {
             //show-Server_WritePanel and Server_WRiteButton
             //hide-Server_SearchPanel and Find_Button
-            TogglePanel_Server(Server_WritePanel, Write_Button, Server_SearchPanel, Find_Button);
+            Write_Button.BackgroundImage = Properties.Resources.Write_Button_On;
+            Find_Button.BackgroundImage = Properties.Resources.Find_Button_Off;
+            Server_WritePanel.Visible = true;
+            Server_SearchPanel.Visible = false;
         }
         private void Find_Button_Click(object sender, EventArgs e)
         {
             //show-Server_SearchPanel and Find_Button
             //hide-Server_WritePanel and Server_WRiteButton
-            TogglePanel_Server(Server_SearchPanel, Find_Button, Server_WritePanel, Write_Button);
+            Write_Button.BackgroundImage = Properties.Resources.Write_Button_Off;
+            Find_Button.BackgroundImage = Properties.Resources.Find_Button_On;
+            Server_WritePanel.Visible = false;
+            Server_SearchPanel.Visible = true;
         }
         private void ExitButton_MouseLeave(object sender, EventArgs e)
         {
@@ -253,6 +247,6 @@ namespace Server_DataBase
             {
                 Write_ReasonCombobox.Items.Add(reason);
             }
-        }  
+        }
     }
 }

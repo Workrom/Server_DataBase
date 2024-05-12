@@ -30,6 +30,7 @@ namespace Server_DataBase
             {
                 dataTable = InitializeDataTable();
             }
+
             // Add a new row with the provided data
             DataRow newRow = dataTable.NewRow();
             newRow["User"] = user;
@@ -52,6 +53,7 @@ namespace Server_DataBase
 
             using (var reader = new StreamReader(RNpath))
             {
+                //skip header row
                 reader.ReadLine();
                 string line;
                 while ((line = reader.ReadLine()) != null)
@@ -69,8 +71,12 @@ namespace Server_DataBase
                     string user = row["User"].ToString();
                     string date = row["Date"].ToString();
                     string time = row["Time"].ToString();
+
                     //so i check reasons by ToLower() which is dumb
                     //and it will be smarter to use Regex
+
+                    //so i just found out how hard it is to match 2 string via treshold
+                    //no thx i will rely on user input
                     string reason = row["Reason"].ToString().Trim().ToLower();
 
                     stwUDT.WriteLine($"{user},{date},{time},{existingReasons[reason]}");
