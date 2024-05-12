@@ -1,20 +1,44 @@
 using System.Data;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Server_DataBase
 {
     public partial class Form1 : Form
     {
+        //... Make the Form movable
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+        //...
+
+
         CSV_Handle CSV = new CSV_Handle();
         public DataTable Datatable_ReadR;
+
+        //          Form Main Controls             \\
         public Form1()
         {
             InitializeComponent();
             Datatable_ReadR = CSV.Read();
+
         }
         private void Form1_Load(object sender, EventArgs e)
         {
             PopulateComboBoxWithReasons();
+        }
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
         }
         private void TogglePanel_Main(Panel panelToShow, Button buttonToShow, Panel panelToHide, Button buttonToHide)
         {
@@ -78,6 +102,7 @@ namespace Server_DataBase
         {
             Application.Exit();
         }
+        //          Form Main Controls             \\
 
         //              Write tabpage               \\
         private void Write_LoadBut_Click(object sender, EventArgs e)
@@ -163,26 +188,56 @@ namespace Server_DataBase
         }
         //              Write tabpage               \\
 
+        //              Read tabpage                \\
         private void Read_Button_Click(object sender, EventArgs e)
         {
             DisplayDataInDataGridView();
         }
+        //              Read tabpage                \\
         private void LoadInDGV()
         {
-            string user = Write_Usertxb.Text;
-            string date = Write_datetimepicker.Text;
-            string time = Write_Timetxb.Text;
-            string reason = "";
-            if (Write_ReasonCombobox.Enabled == true)
+            if (Check_ForDataValidation())
             {
-                reason = Write_ReasonCombobox.Text;
+                string user = Write_Usertxb.Text;
+                string date = Write_datetimepicker.Text;
+                string time = Write_Timetxb.Text;
+                string reason = "";
+                if (Write_ReasonCombobox.Enabled == true)
+                {
+                    reason = Write_ReasonCombobox.Text;
+                }
+                else
+                {
+                    reason = Write_Reasontxb.Text;
+                }
+                Write_DataGridView.AutoGenerateColumns = true;
+                Write_DataGridView.DataSource = CSV.Load(user, date, time, reason);
             }
-            else
+        }
+        private bool Check_ForDataValidation()
+        {
+            //So check for if the textbox is empty 
+            //if it is dont load it in dgv
+            //if it isn`nt then everything is correct
+            //i moved this method and improved it from Load() in CSV_Handle
+            Dictionary<string, string> controlNameMapp = new Dictionary<string, string>
             {
-                reason = Write_Reasontxb.Text;
+            { "Write_Usertxb", "User text" },
+            { "Write_datetimepicker", "Date" },
+            { "Write_Timetxb", "Time" },
+            { "Write_ReasonCombobox", "Reason text" },
+            { "Write_Reasontxb", "Reason text" }
+            };
+            foreach (var textfield in controlNameMapp)
+            {
+                Control control = Controls.Find(textfield.Key, true).FirstOrDefault();
+                if (control != null && control.Enabled && string.IsNullOrWhiteSpace(control.Text))
+                {
+                    MessageBox.Show($"The {textfield.Value} is empty.");
+                    return false;
+                }
             }
-            Write_DataGridView.AutoGenerateColumns = true;
-            Write_DataGridView.DataSource = CSV.Load(user, date, time, reason);
+            return true;
         }
         public void DisplayDataInDataGridView()
         {
@@ -198,8 +253,6 @@ namespace Server_DataBase
             {
                 Write_ReasonCombobox.Items.Add(reason);
             }
-        }
+        }  
     }
 }
-
-

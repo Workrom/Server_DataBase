@@ -69,6 +69,8 @@ namespace Server_DataBase
                     string user = row["User"].ToString();
                     string date = row["Date"].ToString();
                     string time = row["Time"].ToString();
+                    //so i check reasons by ToLower() which is dumb
+                    //and it will be smarter to use Regex
                     string reason = row["Reason"].ToString().Trim().ToLower();
 
                     stwUDT.WriteLine($"{user},{date},{time},{existingReasons[reason]}");

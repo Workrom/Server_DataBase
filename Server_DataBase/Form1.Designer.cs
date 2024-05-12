@@ -334,7 +334,7 @@
             Write_DataGridView.BorderStyle = BorderStyle.Fixed3D;
             Write_DataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Write_DataGridView.GridColor = SystemColors.GradientActiveCaption;
-            Write_DataGridView.Location = new Point(392, 3);
+            Write_DataGridView.Location = new Point(367, 3);
             Write_DataGridView.Margin = new Padding(3, 2, 3, 2);
             Write_DataGridView.Name = "Write_DataGridView";
             Write_DataGridView.ReadOnly = true;
@@ -343,7 +343,7 @@
             Write_DataGridView.RowTemplate.Height = 29;
             Write_DataGridView.ScrollBars = ScrollBars.Vertical;
             Write_DataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            Write_DataGridView.Size = new Size(385, 428);
+            Write_DataGridView.Size = new Size(410, 428);
             Write_DataGridView.TabIndex = 1;
             // 
             // Server_SearchPanel
@@ -473,6 +473,7 @@
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Load += Form1_Load;
+            MouseDown += Form1_MouseDown;
             ServerPanel.ResumeLayout(false);
             Server_MainPanel.ResumeLayout(false);
             Server_WritePanel.ResumeLayout(false);
