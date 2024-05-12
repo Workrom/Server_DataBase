@@ -26,7 +26,10 @@ namespace Server_DataBase
 
         public DataTable Load(string user, string date, string time, string reason)
         {
+            if (dataTable == null || dataTable.Rows.Count == 0)
+            {
                 dataTable = InitializeDataTable();
+            }
             // Add a new row with the provided data
             DataRow newRow = dataTable.NewRow();
             newRow["User"] = user;

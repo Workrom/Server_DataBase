@@ -5,61 +5,63 @@ namespace Server_DataBase
 {
     public partial class Form1 : Form
     {
-
         CSV_Handle CSV = new CSV_Handle();
+        public DataTable Datatable_ReadR;
         public Form1()
         {
             InitializeComponent();
-            Read_DataGridView.RowHeadersVisible = false;
-            Write_DataGridView.RowHeadersVisible = false;
-
-            Write_Timetxb.KeyPress += Write_Timetxb_KeyPress;
-
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            Datatable_ReadR = CSV.Read();
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             PopulateComboBoxWithReasons();
-            //i`ll think of a better way later
-            ServerPanel.Visible = false;
-            ServerPanel.Enabled = false;
-            Write_Button.BackgroundImage = Properties.Resources.Write_Button_On;
-            HomeButton.BackgroundImage = Properties.Resources.Home_Button_On;
-            ServerButton.BackgroundImage = Properties.Resources.Server_Button_Off;
-            ServerButton.FlatAppearance.BorderColor = Color.FromArgb(34, 32, 52);
         }
+        private void TogglePanel_Main(Panel panelToShow, Button buttonToShow, Panel panelToHide, Button buttonToHide)
+        {
+            buttonToShow.BackgroundImage = Properties.Resources.Server_Button_On;
+            buttonToShow.FlatAppearance.BorderColor = Color.Black;
+            panelToShow.Visible = true;
+            panelToShow.Enabled = true;
 
+            buttonToHide.BackgroundImage = Properties.Resources.Home_Button_Off;
+            buttonToHide.FlatAppearance.BorderColor = Color.FromArgb(34, 32, 52);
+            panelToHide.Visible = false;
+            panelToHide.Enabled = false;
+        }
+        private void TogglePanel_Server(Panel panelToShow, Button buttonToShow, Panel panelToHide, Button buttonToHide)
+        {
+            buttonToShow.BackgroundImage = Properties.Resources.Write_Button_On;
+            panelToShow.Visible = true;
+            panelToShow.Enabled = true;
+
+            buttonToHide.BackgroundImage = Properties.Resources.Find_Button_Off;
+            panelToHide.Visible = false;
+            panelToHide.Enabled = false;
+        }
         private void HomeButton_Click(object sender, EventArgs e)
         {
-            HomeButton.BackgroundImage = Properties.Resources.Home_Button_On;
-            HomeButton.FlatAppearance.BorderColor = Color.Black;
-            HomePanel.Visible = true;
-            HomePanel.Enabled = true;
-
-            ServerButton.BackgroundImage = Properties.Resources.Server_Button_Off;
-            ServerButton.FlatAppearance.BorderColor = Color.FromArgb(34, 32, 52);
-            ServerPanel.Visible = false;
-            ServerPanel.Enabled = false;
+            //show-HomePanel and HomeButton
+            //hide-ServerPanel and ServerButton
+            TogglePanel_Main(HomePanel, HomeButton, ServerPanel, ServerButton);
         }
 
         private void ServerButton_Click(object sender, EventArgs e)
         {
-            ServerButton.BackgroundImage = Properties.Resources.Server_Button_On;
-            ServerButton.FlatAppearance.BorderColor = Color.Black;
-            ServerPanel.Visible = true;
-            ServerPanel.Enabled = true;
-
-            HomeButton.BackgroundImage = Properties.Resources.Home_Button_Off;
-            HomeButton.FlatAppearance.BorderColor = Color.FromArgb(34, 32, 52);
-            HomePanel.Visible = false;
-            HomePanel.Enabled = false;
-            //ужас 
+            //show-ServerPanel and ServerButton
+            //hide-HomePanel and HomeButton
+            TogglePanel_Main(ServerPanel, ServerButton, HomePanel, HomeButton);
         }
-
-        private void ExitButton_Click(object sender, EventArgs e)
+        private void Write_Button_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            //show-Server_WritePanel and Server_WRiteButton
+            //hide-Server_SearchPanel and Find_Button
+            TogglePanel_Server(Server_WritePanel, Write_Button, Server_SearchPanel, Find_Button);
+        }
+        private void Find_Button_Click(object sender, EventArgs e)
+        {
+            //show-Server_SearchPanel and Find_Button
+            //hide-Server_WritePanel and Server_WRiteButton
+            TogglePanel_Server(Server_SearchPanel, Find_Button, Server_WritePanel, Write_Button);
         }
         private void ExitButton_MouseLeave(object sender, EventArgs e)
         {
@@ -72,47 +74,43 @@ namespace Server_DataBase
             ExitButton.Visible = true;
             Button_Gif.Visible = false;
         }
-
-        private void Read_Button_Click(object sender, EventArgs e)
+        private void ExitButton_Click(object sender, EventArgs e)
         {
-            DisplayDataInDataGridView();
+            Application.Exit();
         }
 
-        public void DisplayDataInDataGridView()
+        //              Write tabpage               \\
+        private void Write_LoadBut_Click(object sender, EventArgs e)
         {
-            Read_DataGridView.AutoGenerateColumns = true;
-            Read_DataGridView.DataSource = CSV.Read();
+            LoadInDGV();
         }
-
-        private void Write_Button_Click(object sender, EventArgs e)
+        private void WriteBut_Click(object sender, EventArgs e)
         {
-            Write_Button.BackgroundImage = Properties.Resources.Write_Button_On;
-            Find_Button.BackgroundImage = Properties.Resources.Find_Button_Off;
-
-            Server_WritePanel.Visible = true;
-            Server_SearchPanel.Visible = false;
+            CSV.Write(CSV.dataTable);
         }
-
-        private void Find_Button_Click(object sender, EventArgs e)
+        private void Write_ClearBut_Click(object sender, EventArgs e)
         {
-            Write_Button.BackgroundImage = Properties.Resources.Write_Button_Off;
-            Find_Button.BackgroundImage = Properties.Resources.Find_Button_On;
-
-            Server_WritePanel.Visible = false;
-            Server_SearchPanel.Visible = true;
-        }
-        public void PopulateComboBoxWithReasons()
-        {
-            DataTable dataTable = CSV.Read();
-
-            var Reasons = dataTable.AsEnumerable().Select(x => x.Field<string>("Reason")).Distinct();
-            Write_ReasonCombobox.Items.Clear();
-            foreach (var reason in Reasons)
+            if (Write_DataGridView.Rows.Count > 0)
             {
-                Write_ReasonCombobox.Items.Add(reason);
+                Write_DataGridView.Rows.RemoveAt(Write_DataGridView.Rows.Count - 1);
             }
         }
+        private void Write_ClearAllBut_Click(object sender, EventArgs e)
+        {
+            Write_DataGridView.Rows.Clear();
+        }
 
+        private void Write_ExisRNbtn_CheckedChanged(object sender, EventArgs e)
+        {
+            Write_ReasonCombobox.Enabled = true;
+            Write_Reasontxb.Enabled = false;
+        }
+
+        private void Write_OtherRNbtn_CheckedChanged(object sender, EventArgs e)
+        {
+            Write_ReasonCombobox.Enabled = false;
+            Write_Reasontxb.Enabled = true;
+        }
         private async void Write_Timetxb_KeyPress(object? sender, KeyPressEventArgs e)
         {
             //why error handle when error cannot happend :) (probably not true but still i tried)
@@ -163,35 +161,43 @@ namespace Server_DataBase
                 }
             }
         }
+        //              Write tabpage               \\
+
+        private void Read_Button_Click(object sender, EventArgs e)
+        {
+            DisplayDataInDataGridView();
+        }
         private void LoadInDGV()
         {
             string user = Write_Usertxb.Text;
             string date = Write_datetimepicker.Text;
             string time = Write_Timetxb.Text;
-            string reason = Write_ReasonCombobox.Text;
-
+            string reason = "";
+            if (Write_ReasonCombobox.Enabled == true)
+            {
+                reason = Write_ReasonCombobox.Text;
+            }
+            else
+            {
+                reason = Write_Reasontxb.Text;
+            }
             Write_DataGridView.AutoGenerateColumns = true;
             Write_DataGridView.DataSource = CSV.Load(user, date, time, reason);
-
         }
-        private void Write_LoadBut_Click(object sender, EventArgs e)
+        public void DisplayDataInDataGridView()
         {
-            LoadInDGV();
+            Read_DataGridView.AutoGenerateColumns = true;
+            Read_DataGridView.DataSource = Datatable_ReadR;
         }
-        private void WriteBut_Click(object sender, EventArgs e)
+        public void PopulateComboBoxWithReasons()
         {
-            CSV.Write(CSV.dataTable);
-        }
-        private void Write_ClearBut_Click(object sender, EventArgs e)
-        {
-            if (Write_DataGridView.Rows.Count > 0)
+            //select reasons within the file and when the program opens load the reasons into a combobox
+            var Reasons = Datatable_ReadR.AsEnumerable().Select(x => x.Field<string>("Reason")).Distinct();
+            Write_ReasonCombobox.Items.Clear();
+            foreach (var reason in Reasons)
             {
-                Write_DataGridView.Rows.RemoveAt(Write_DataGridView.Rows.Count - 1);
+                Write_ReasonCombobox.Items.Add(reason);
             }
-        }
-        private void Write_ClearAllBut_Click(object sender, EventArgs e)
-        {
-            Write_DataGridView.Rows.Clear();
         }
     }
 }
