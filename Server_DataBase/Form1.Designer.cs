@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             ServerPanel = new Panel();
+            Server_MainPanel = new Panel();
+            Find_Button = new Button();
+            Write_Button = new Button();
             Server_SearchPanel = new Panel();
             Search_Dayslbl = new Label();
             Search_lbl1 = new Label();
@@ -50,9 +53,6 @@
             Search_Clearbtn = new Button();
             Search_Button = new Button();
             Read_DataGridView = new DataGridView();
-            Server_MainPanel = new Panel();
-            Find_Button = new Button();
-            Write_Button = new Button();
             Server_WritePanel = new Panel();
             Write_OtherRNbtn = new RadioButton();
             Write_ExisRNbtn = new RadioButton();
@@ -76,9 +76,9 @@
             ExitButton = new Button();
             Button_Gif = new PictureBox();
             ServerPanel.SuspendLayout();
+            Server_MainPanel.SuspendLayout();
             Server_SearchPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Read_DataGridView).BeginInit();
-            Server_MainPanel.SuspendLayout();
             Server_WritePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Write_DataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Button_Gif).BeginInit();
@@ -88,270 +88,14 @@
             // 
             ServerPanel.BackColor = Color.Black;
             ServerPanel.Controls.Add(Server_MainPanel);
-            ServerPanel.Controls.Add(Server_WritePanel);
             ServerPanel.Controls.Add(Server_SearchPanel);
-            ServerPanel.Enabled = false;
+            ServerPanel.Controls.Add(Server_WritePanel);
             ServerPanel.Location = new Point(10, 50);
             ServerPanel.Margin = new Padding(3, 2, 3, 2);
             ServerPanel.Name = "ServerPanel";
             ServerPanel.Size = new Size(992, 439);
             ServerPanel.TabIndex = 0;
             ServerPanel.Visible = false;
-            // 
-            // Server_SearchPanel
-            // 
-            Server_SearchPanel.BorderStyle = BorderStyle.FixedSingle;
-            Server_SearchPanel.Controls.Add(Search_Dayslbl);
-            Server_SearchPanel.Controls.Add(Search_lbl1);
-            Server_SearchPanel.Controls.Add(Search_Timechkbox);
-            Server_SearchPanel.Controls.Add(Search_Datechkbox);
-            Server_SearchPanel.Controls.Add(Search_TimePickerTo);
-            Server_SearchPanel.Controls.Add(Search_TimePickerFrom);
-            Server_SearchPanel.Controls.Add(Search_DatePickerTo);
-            Server_SearchPanel.Controls.Add(Search_DatePickerFrom);
-            Server_SearchPanel.Controls.Add(Search_UserCombobox);
-            Server_SearchPanel.Controls.Add(Search_Timelbl);
-            Server_SearchPanel.Controls.Add(Search_Datelbl);
-            Server_SearchPanel.Controls.Add(Search_ReasonCombobox);
-            Server_SearchPanel.Controls.Add(Search_Reasonlbl);
-            Server_SearchPanel.Controls.Add(Search_Userlbl);
-            Server_SearchPanel.Controls.Add(Search_Exportbtn);
-            Server_SearchPanel.Controls.Add(Search_ClearAllbtn);
-            Server_SearchPanel.Controls.Add(Search_Clearbtn);
-            Server_SearchPanel.Controls.Add(Search_Button);
-            Server_SearchPanel.Controls.Add(Read_DataGridView);
-            Server_SearchPanel.Location = new Point(208, 3);
-            Server_SearchPanel.Margin = new Padding(3, 2, 3, 2);
-            Server_SearchPanel.Name = "Server_SearchPanel";
-            Server_SearchPanel.Size = new Size(781, 434);
-            Server_SearchPanel.TabIndex = 4;
-            // 
-            // Search_Dayslbl
-            // 
-            Search_Dayslbl.AutoSize = true;
-            Search_Dayslbl.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Search_Dayslbl.ForeColor = Color.ForestGreen;
-            Search_Dayslbl.Location = new Point(264, 267);
-            Search_Dayslbl.Name = "Search_Dayslbl";
-            Search_Dayslbl.Size = new Size(17, 21);
-            Search_Dayslbl.TabIndex = 26;
-            Search_Dayslbl.Text = "_";
-            // 
-            // Search_lbl1
-            // 
-            Search_lbl1.AutoSize = true;
-            Search_lbl1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Search_lbl1.ForeColor = Color.ForestGreen;
-            Search_lbl1.Location = new Point(13, 267);
-            Search_lbl1.Name = "Search_lbl1";
-            Search_lbl1.Size = new Size(255, 21);
-            Search_lbl1.TabIndex = 25;
-            Search_lbl1.Text = "Days from the last update in view:";
-            // 
-            // Search_Timechkbox
-            // 
-            Search_Timechkbox.AutoSize = true;
-            Search_Timechkbox.Location = new Point(145, 169);
-            Search_Timechkbox.Name = "Search_Timechkbox";
-            Search_Timechkbox.Size = new Size(15, 14);
-            Search_Timechkbox.TabIndex = 24;
-            Search_Timechkbox.UseVisualStyleBackColor = true;
-            // 
-            // Search_Datechkbox
-            // 
-            Search_Datechkbox.AutoSize = true;
-            Search_Datechkbox.Location = new Point(145, 91);
-            Search_Datechkbox.Name = "Search_Datechkbox";
-            Search_Datechkbox.Size = new Size(15, 14);
-            Search_Datechkbox.TabIndex = 23;
-            Search_Datechkbox.UseVisualStyleBackColor = true;
-            // 
-            // Search_TimePickerTo
-            // 
-            Search_TimePickerTo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            Search_TimePickerTo.Location = new Point(198, 190);
-            Search_TimePickerTo.Name = "Search_TimePickerTo";
-            Search_TimePickerTo.PlaceholderText = "00:00";
-            Search_TimePickerTo.Size = new Size(105, 23);
-            Search_TimePickerTo.TabIndex = 22;
-            Search_TimePickerTo.TextAlign = HorizontalAlignment.Center;
-            // 
-            // Search_TimePickerFrom
-            // 
-            Search_TimePickerFrom.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            Search_TimePickerFrom.Location = new Point(58, 190);
-            Search_TimePickerFrom.Name = "Search_TimePickerFrom";
-            Search_TimePickerFrom.PlaceholderText = "00:00";
-            Search_TimePickerFrom.Size = new Size(101, 23);
-            Search_TimePickerFrom.TabIndex = 21;
-            Search_TimePickerFrom.TextAlign = HorizontalAlignment.Center;
-            // 
-            // Search_DatePickerTo
-            // 
-            Search_DatePickerTo.Format = DateTimePickerFormat.Short;
-            Search_DatePickerTo.Location = new Point(203, 111);
-            Search_DatePickerTo.Name = "Search_DatePickerTo";
-            Search_DatePickerTo.Size = new Size(112, 23);
-            Search_DatePickerTo.TabIndex = 20;
-            // 
-            // Search_DatePickerFrom
-            // 
-            Search_DatePickerFrom.Format = DateTimePickerFormat.Short;
-            Search_DatePickerFrom.Location = new Point(35, 111);
-            Search_DatePickerFrom.Name = "Search_DatePickerFrom";
-            Search_DatePickerFrom.Size = new Size(112, 23);
-            Search_DatePickerFrom.TabIndex = 19;
-            // 
-            // Search_UserCombobox
-            // 
-            Search_UserCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
-            Search_UserCombobox.FormattingEnabled = true;
-            Search_UserCombobox.Location = new Point(13, 41);
-            Search_UserCombobox.Name = "Search_UserCombobox";
-            Search_UserCombobox.Size = new Size(129, 23);
-            Search_UserCombobox.TabIndex = 18;
-            // 
-            // Search_Timelbl
-            // 
-            Search_Timelbl.AutoSize = true;
-            Search_Timelbl.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Search_Timelbl.ForeColor = Color.ForestGreen;
-            Search_Timelbl.Location = new Point(159, 164);
-            Search_Timelbl.Name = "Search_Timelbl";
-            Search_Timelbl.Size = new Size(46, 21);
-            Search_Timelbl.TabIndex = 17;
-            Search_Timelbl.Text = "Time";
-            // 
-            // Search_Datelbl
-            // 
-            Search_Datelbl.AutoSize = true;
-            Search_Datelbl.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Search_Datelbl.ForeColor = Color.ForestGreen;
-            Search_Datelbl.Location = new Point(159, 87);
-            Search_Datelbl.Name = "Search_Datelbl";
-            Search_Datelbl.Size = new Size(44, 21);
-            Search_Datelbl.TabIndex = 16;
-            Search_Datelbl.Text = "Date";
-            // 
-            // Search_ReasonCombobox
-            // 
-            Search_ReasonCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
-            Search_ReasonCombobox.FormattingEnabled = true;
-            Search_ReasonCombobox.Location = new Point(218, 41);
-            Search_ReasonCombobox.Name = "Search_ReasonCombobox";
-            Search_ReasonCombobox.Size = new Size(129, 23);
-            Search_ReasonCombobox.TabIndex = 15;
-            // 
-            // Search_Reasonlbl
-            // 
-            Search_Reasonlbl.AutoSize = true;
-            Search_Reasonlbl.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Search_Reasonlbl.ForeColor = Color.ForestGreen;
-            Search_Reasonlbl.Location = new Point(249, 17);
-            Search_Reasonlbl.Name = "Search_Reasonlbl";
-            Search_Reasonlbl.Size = new Size(63, 21);
-            Search_Reasonlbl.TabIndex = 14;
-            Search_Reasonlbl.Text = "Reason";
-            // 
-            // Search_Userlbl
-            // 
-            Search_Userlbl.AutoSize = true;
-            Search_Userlbl.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Search_Userlbl.ForeColor = Color.ForestGreen;
-            Search_Userlbl.Location = new Point(42, 17);
-            Search_Userlbl.Name = "Search_Userlbl";
-            Search_Userlbl.Size = new Size(43, 21);
-            Search_Userlbl.TabIndex = 13;
-            Search_Userlbl.Text = "User";
-            // 
-            // Search_Exportbtn
-            // 
-            Search_Exportbtn.BackColor = Color.DarkGreen;
-            Search_Exportbtn.Cursor = Cursors.Hand;
-            Search_Exportbtn.FlatAppearance.BorderColor = Color.DarkGreen;
-            Search_Exportbtn.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
-            Search_Exportbtn.FlatStyle = FlatStyle.Flat;
-            Search_Exportbtn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            Search_Exportbtn.ForeColor = Color.White;
-            Search_Exportbtn.Location = new Point(92, 330);
-            Search_Exportbtn.Margin = new Padding(3, 2, 3, 2);
-            Search_Exportbtn.Name = "Search_Exportbtn";
-            Search_Exportbtn.Size = new Size(200, 27);
-            Search_Exportbtn.TabIndex = 4;
-            Search_Exportbtn.Text = "Export";
-            Search_Exportbtn.UseVisualStyleBackColor = false;
-            // 
-            // Search_ClearAllbtn
-            // 
-            Search_ClearAllbtn.BackColor = Color.DarkGreen;
-            Search_ClearAllbtn.Cursor = Cursors.Hand;
-            Search_ClearAllbtn.FlatAppearance.BorderColor = Color.DarkGreen;
-            Search_ClearAllbtn.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
-            Search_ClearAllbtn.FlatStyle = FlatStyle.Flat;
-            Search_ClearAllbtn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            Search_ClearAllbtn.ForeColor = Color.White;
-            Search_ClearAllbtn.Location = new Point(92, 396);
-            Search_ClearAllbtn.Margin = new Padding(3, 2, 3, 2);
-            Search_ClearAllbtn.Name = "Search_ClearAllbtn";
-            Search_ClearAllbtn.Size = new Size(200, 27);
-            Search_ClearAllbtn.TabIndex = 3;
-            Search_ClearAllbtn.Text = "Clear all";
-            Search_ClearAllbtn.UseVisualStyleBackColor = false;
-            // 
-            // Search_Clearbtn
-            // 
-            Search_Clearbtn.BackColor = Color.DarkGreen;
-            Search_Clearbtn.Cursor = Cursors.Hand;
-            Search_Clearbtn.FlatAppearance.BorderColor = Color.DarkGreen;
-            Search_Clearbtn.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
-            Search_Clearbtn.FlatStyle = FlatStyle.Flat;
-            Search_Clearbtn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            Search_Clearbtn.ForeColor = Color.White;
-            Search_Clearbtn.Location = new Point(92, 363);
-            Search_Clearbtn.Margin = new Padding(3, 2, 3, 2);
-            Search_Clearbtn.Name = "Search_Clearbtn";
-            Search_Clearbtn.Size = new Size(200, 27);
-            Search_Clearbtn.TabIndex = 2;
-            Search_Clearbtn.Text = "Clear";
-            Search_Clearbtn.UseVisualStyleBackColor = false;
-            // 
-            // Search_Button
-            // 
-            Search_Button.BackColor = Color.DarkGreen;
-            Search_Button.Cursor = Cursors.Hand;
-            Search_Button.FlatAppearance.BorderColor = Color.DarkGreen;
-            Search_Button.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
-            Search_Button.FlatStyle = FlatStyle.Flat;
-            Search_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            Search_Button.ForeColor = Color.White;
-            Search_Button.Location = new Point(92, 297);
-            Search_Button.Margin = new Padding(3, 2, 3, 2);
-            Search_Button.Name = "Search_Button";
-            Search_Button.Size = new Size(200, 27);
-            Search_Button.TabIndex = 1;
-            Search_Button.Text = "Search";
-            Search_Button.UseVisualStyleBackColor = false;
-            Search_Button.Click += Read_Button_Click;
-            // 
-            // Read_DataGridView
-            // 
-            Read_DataGridView.AllowUserToAddRows = false;
-            Read_DataGridView.AllowUserToDeleteRows = false;
-            Read_DataGridView.BackgroundColor = SystemColors.ActiveCaptionText;
-            Read_DataGridView.BorderStyle = BorderStyle.Fixed3D;
-            Read_DataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Read_DataGridView.GridColor = SystemColors.GradientActiveCaption;
-            Read_DataGridView.Location = new Point(367, 3);
-            Read_DataGridView.Margin = new Padding(3, 2, 3, 2);
-            Read_DataGridView.Name = "Read_DataGridView";
-            Read_DataGridView.ReadOnly = true;
-            Read_DataGridView.RowHeadersVisible = false;
-            Read_DataGridView.RowHeadersWidth = 51;
-            Read_DataGridView.RowTemplate.Height = 29;
-            Read_DataGridView.ScrollBars = ScrollBars.Vertical;
-            Read_DataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            Read_DataGridView.Size = new Size(410, 428);
-            Read_DataGridView.TabIndex = 0;
             // 
             // Server_MainPanel
             // 
@@ -393,6 +137,269 @@
             Write_Button.TabIndex = 0;
             Write_Button.UseVisualStyleBackColor = true;
             Write_Button.Click += Write_Button_Click;
+            // 
+            // Server_SearchPanel
+            // 
+            Server_SearchPanel.BorderStyle = BorderStyle.FixedSingle;
+            Server_SearchPanel.Controls.Add(Search_Dayslbl);
+            Server_SearchPanel.Controls.Add(Search_lbl1);
+            Server_SearchPanel.Controls.Add(Search_Timechkbox);
+            Server_SearchPanel.Controls.Add(Search_Datechkbox);
+            Server_SearchPanel.Controls.Add(Search_TimePickerTo);
+            Server_SearchPanel.Controls.Add(Search_TimePickerFrom);
+            Server_SearchPanel.Controls.Add(Search_DatePickerTo);
+            Server_SearchPanel.Controls.Add(Search_DatePickerFrom);
+            Server_SearchPanel.Controls.Add(Search_UserCombobox);
+            Server_SearchPanel.Controls.Add(Search_Timelbl);
+            Server_SearchPanel.Controls.Add(Search_Datelbl);
+            Server_SearchPanel.Controls.Add(Search_ReasonCombobox);
+            Server_SearchPanel.Controls.Add(Search_Reasonlbl);
+            Server_SearchPanel.Controls.Add(Search_Userlbl);
+            Server_SearchPanel.Controls.Add(Search_Exportbtn);
+            Server_SearchPanel.Controls.Add(Search_ClearAllbtn);
+            Server_SearchPanel.Controls.Add(Search_Clearbtn);
+            Server_SearchPanel.Controls.Add(Search_Button);
+            Server_SearchPanel.Controls.Add(Read_DataGridView);
+            Server_SearchPanel.Location = new Point(208, 3);
+            Server_SearchPanel.Margin = new Padding(3, 2, 3, 2);
+            Server_SearchPanel.Name = "Server_SearchPanel";
+            Server_SearchPanel.Size = new Size(781, 434);
+            Server_SearchPanel.TabIndex = 4;
+            // 
+            // Search_Dayslbl
+            // 
+            Search_Dayslbl.AutoSize = true;
+            Search_Dayslbl.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Search_Dayslbl.ForeColor = Color.ForestGreen;
+            Search_Dayslbl.Location = new Point(211, 267);
+            Search_Dayslbl.Name = "Search_Dayslbl";
+            Search_Dayslbl.Size = new Size(17, 21);
+            Search_Dayslbl.TabIndex = 26;
+            Search_Dayslbl.Text = "_";
+            // 
+            // Search_lbl1
+            // 
+            Search_lbl1.AutoSize = true;
+            Search_lbl1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Search_lbl1.ForeColor = Color.ForestGreen;
+            Search_lbl1.Location = new Point(13, 267);
+            Search_lbl1.Name = "Search_lbl1";
+            Search_lbl1.Size = new Size(192, 21);
+            Search_lbl1.TabIndex = 25;
+            Search_lbl1.Text = "Total amount of updates:";
+            // 
+            // Search_Timechkbox
+            // 
+            Search_Timechkbox.AutoSize = true;
+            Search_Timechkbox.Location = new Point(102, 167);
+            Search_Timechkbox.Name = "Search_Timechkbox";
+            Search_Timechkbox.Size = new Size(15, 14);
+            Search_Timechkbox.TabIndex = 24;
+            Search_Timechkbox.UseVisualStyleBackColor = true;
+            Search_Timechkbox.CheckedChanged += Search_Timechkbox_CheckedChanged;
+            // 
+            // Search_Datechkbox
+            // 
+            Search_Datechkbox.AutoSize = true;
+            Search_Datechkbox.Location = new Point(102, 91);
+            Search_Datechkbox.Name = "Search_Datechkbox";
+            Search_Datechkbox.Size = new Size(15, 14);
+            Search_Datechkbox.TabIndex = 23;
+            Search_Datechkbox.UseVisualStyleBackColor = true;
+            Search_Datechkbox.CheckedChanged += Search_Datechkbox_CheckedChanged;
+            // 
+            // Search_TimePickerTo
+            // 
+            Search_TimePickerTo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            Search_TimePickerTo.Enabled = false;
+            Search_TimePickerTo.Location = new Point(145, 190);
+            Search_TimePickerTo.Name = "Search_TimePickerTo";
+            Search_TimePickerTo.PlaceholderText = "00:00";
+            Search_TimePickerTo.Size = new Size(105, 23);
+            Search_TimePickerTo.TabIndex = 22;
+            Search_TimePickerTo.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Search_TimePickerFrom
+            // 
+            Search_TimePickerFrom.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            Search_TimePickerFrom.Enabled = false;
+            Search_TimePickerFrom.Location = new Point(12, 189);
+            Search_TimePickerFrom.Name = "Search_TimePickerFrom";
+            Search_TimePickerFrom.PlaceholderText = "00:00";
+            Search_TimePickerFrom.Size = new Size(101, 23);
+            Search_TimePickerFrom.TabIndex = 21;
+            Search_TimePickerFrom.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Search_DatePickerTo
+            // 
+            Search_DatePickerTo.Enabled = false;
+            Search_DatePickerTo.Format = DateTimePickerFormat.Short;
+            Search_DatePickerTo.Location = new Point(145, 111);
+            Search_DatePickerTo.Name = "Search_DatePickerTo";
+            Search_DatePickerTo.Size = new Size(112, 23);
+            Search_DatePickerTo.TabIndex = 20;
+            // 
+            // Search_DatePickerFrom
+            // 
+            Search_DatePickerFrom.Enabled = false;
+            Search_DatePickerFrom.Format = DateTimePickerFormat.Short;
+            Search_DatePickerFrom.Location = new Point(6, 111);
+            Search_DatePickerFrom.Name = "Search_DatePickerFrom";
+            Search_DatePickerFrom.Size = new Size(112, 23);
+            Search_DatePickerFrom.TabIndex = 19;
+            // 
+            // Search_UserCombobox
+            // 
+            Search_UserCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
+            Search_UserCombobox.FormattingEnabled = true;
+            Search_UserCombobox.Location = new Point(3, 41);
+            Search_UserCombobox.Name = "Search_UserCombobox";
+            Search_UserCombobox.Size = new Size(129, 23);
+            Search_UserCombobox.TabIndex = 18;
+            // 
+            // Search_Timelbl
+            // 
+            Search_Timelbl.AutoSize = true;
+            Search_Timelbl.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Search_Timelbl.ForeColor = Color.ForestGreen;
+            Search_Timelbl.Location = new Point(116, 162);
+            Search_Timelbl.Name = "Search_Timelbl";
+            Search_Timelbl.Size = new Size(46, 21);
+            Search_Timelbl.TabIndex = 17;
+            Search_Timelbl.Text = "Time";
+            // 
+            // Search_Datelbl
+            // 
+            Search_Datelbl.AutoSize = true;
+            Search_Datelbl.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Search_Datelbl.ForeColor = Color.ForestGreen;
+            Search_Datelbl.Location = new Point(116, 87);
+            Search_Datelbl.Name = "Search_Datelbl";
+            Search_Datelbl.Size = new Size(44, 21);
+            Search_Datelbl.TabIndex = 16;
+            Search_Datelbl.Text = "Date";
+            // 
+            // Search_ReasonCombobox
+            // 
+            Search_ReasonCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
+            Search_ReasonCombobox.FormattingEnabled = true;
+            Search_ReasonCombobox.Location = new Point(145, 41);
+            Search_ReasonCombobox.Name = "Search_ReasonCombobox";
+            Search_ReasonCombobox.Size = new Size(129, 23);
+            Search_ReasonCombobox.TabIndex = 15;
+            // 
+            // Search_Reasonlbl
+            // 
+            Search_Reasonlbl.AutoSize = true;
+            Search_Reasonlbl.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Search_Reasonlbl.ForeColor = Color.ForestGreen;
+            Search_Reasonlbl.Location = new Point(176, 17);
+            Search_Reasonlbl.Name = "Search_Reasonlbl";
+            Search_Reasonlbl.Size = new Size(63, 21);
+            Search_Reasonlbl.TabIndex = 14;
+            Search_Reasonlbl.Text = "Reason";
+            // 
+            // Search_Userlbl
+            // 
+            Search_Userlbl.AutoSize = true;
+            Search_Userlbl.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Search_Userlbl.ForeColor = Color.ForestGreen;
+            Search_Userlbl.Location = new Point(32, 17);
+            Search_Userlbl.Name = "Search_Userlbl";
+            Search_Userlbl.Size = new Size(43, 21);
+            Search_Userlbl.TabIndex = 13;
+            Search_Userlbl.Text = "User";
+            // 
+            // Search_Exportbtn
+            // 
+            Search_Exportbtn.BackColor = Color.DarkGreen;
+            Search_Exportbtn.Cursor = Cursors.Hand;
+            Search_Exportbtn.FlatAppearance.BorderColor = Color.DarkGreen;
+            Search_Exportbtn.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
+            Search_Exportbtn.FlatStyle = FlatStyle.Flat;
+            Search_Exportbtn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Search_Exportbtn.ForeColor = Color.White;
+            Search_Exportbtn.Location = new Point(42, 329);
+            Search_Exportbtn.Margin = new Padding(3, 2, 3, 2);
+            Search_Exportbtn.Name = "Search_Exportbtn";
+            Search_Exportbtn.Size = new Size(200, 27);
+            Search_Exportbtn.TabIndex = 4;
+            Search_Exportbtn.Text = "Export";
+            Search_Exportbtn.UseVisualStyleBackColor = false;
+            // 
+            // Search_ClearAllbtn
+            // 
+            Search_ClearAllbtn.BackColor = Color.DarkGreen;
+            Search_ClearAllbtn.Cursor = Cursors.Hand;
+            Search_ClearAllbtn.FlatAppearance.BorderColor = Color.DarkGreen;
+            Search_ClearAllbtn.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
+            Search_ClearAllbtn.FlatStyle = FlatStyle.Flat;
+            Search_ClearAllbtn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Search_ClearAllbtn.ForeColor = Color.White;
+            Search_ClearAllbtn.Location = new Point(42, 395);
+            Search_ClearAllbtn.Margin = new Padding(3, 2, 3, 2);
+            Search_ClearAllbtn.Name = "Search_ClearAllbtn";
+            Search_ClearAllbtn.Size = new Size(200, 27);
+            Search_ClearAllbtn.TabIndex = 3;
+            Search_ClearAllbtn.Text = "Clear all";
+            Search_ClearAllbtn.UseVisualStyleBackColor = false;
+            Search_ClearAllbtn.Click += Search_ClearAllbtn_Click;
+            // 
+            // Search_Clearbtn
+            // 
+            Search_Clearbtn.BackColor = Color.DarkGreen;
+            Search_Clearbtn.Cursor = Cursors.Hand;
+            Search_Clearbtn.FlatAppearance.BorderColor = Color.DarkGreen;
+            Search_Clearbtn.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
+            Search_Clearbtn.FlatStyle = FlatStyle.Flat;
+            Search_Clearbtn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Search_Clearbtn.ForeColor = Color.White;
+            Search_Clearbtn.Location = new Point(42, 362);
+            Search_Clearbtn.Margin = new Padding(3, 2, 3, 2);
+            Search_Clearbtn.Name = "Search_Clearbtn";
+            Search_Clearbtn.Size = new Size(200, 27);
+            Search_Clearbtn.TabIndex = 2;
+            Search_Clearbtn.Text = "Clear";
+            Search_Clearbtn.UseVisualStyleBackColor = false;
+            Search_Clearbtn.Click += Search_Clearbtn_Click;
+            // 
+            // Search_Button
+            // 
+            Search_Button.BackColor = Color.DarkGreen;
+            Search_Button.Cursor = Cursors.Hand;
+            Search_Button.FlatAppearance.BorderColor = Color.DarkGreen;
+            Search_Button.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
+            Search_Button.FlatStyle = FlatStyle.Flat;
+            Search_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Search_Button.ForeColor = Color.White;
+            Search_Button.Location = new Point(42, 296);
+            Search_Button.Margin = new Padding(3, 2, 3, 2);
+            Search_Button.Name = "Search_Button";
+            Search_Button.Size = new Size(200, 27);
+            Search_Button.TabIndex = 1;
+            Search_Button.Text = "Search";
+            Search_Button.UseVisualStyleBackColor = false;
+            Search_Button.Click += Read_Button_Click;
+            // 
+            // Read_DataGridView
+            // 
+            Read_DataGridView.AllowUserToAddRows = false;
+            Read_DataGridView.AllowUserToDeleteRows = false;
+            Read_DataGridView.BackgroundColor = SystemColors.ActiveCaptionText;
+            Read_DataGridView.BorderStyle = BorderStyle.Fixed3D;
+            Read_DataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Read_DataGridView.GridColor = SystemColors.GradientActiveCaption;
+            Read_DataGridView.Location = new Point(298, 3);
+            Read_DataGridView.Margin = new Padding(3, 2, 3, 2);
+            Read_DataGridView.Name = "Read_DataGridView";
+            Read_DataGridView.ReadOnly = true;
+            Read_DataGridView.RowHeadersVisible = false;
+            Read_DataGridView.RowHeadersWidth = 51;
+            Read_DataGridView.RowTemplate.Height = 29;
+            Read_DataGridView.ScrollBars = ScrollBars.Vertical;
+            Read_DataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            Read_DataGridView.Size = new Size(479, 428);
+            Read_DataGridView.TabIndex = 0;
             // 
             // Server_WritePanel
             // 
@@ -705,10 +712,10 @@
             Load += Form1_Load;
             MouseDown += Form1_MouseDown;
             ServerPanel.ResumeLayout(false);
+            Server_MainPanel.ResumeLayout(false);
             Server_SearchPanel.ResumeLayout(false);
             Server_SearchPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Read_DataGridView).EndInit();
-            Server_MainPanel.ResumeLayout(false);
             Server_WritePanel.ResumeLayout(false);
             Server_WritePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Write_DataGridView).EndInit();

@@ -107,16 +107,16 @@ namespace Server_DataBase
             dataTable.Columns.Add("Date");
             dataTable.Columns.Add("Time");
             dataTable.Columns.Add("Reason");
+            dataTable.Columns.Add("Days last", typeof(string));
+
+            DateTime currentDate = DateTime.Today;
 
             var UDTstr = File.ReadLines(UDTpath).Skip(1).Select(LINE => LINE.Split(',')).Select(LINES => new UDTR { User = LINES[0], Date = LINES[1], Time = LINES[2], ReasonID = int.Parse(LINES[3]) });
             var reasons = File.ReadLines(RNpath).Skip(1).Select(line => line.Split(',')).ToDictionary(parts => int.Parse(parts[0]), parts => parts[1]);
-
             foreach (var data in UDTstr)
             {
-                //COmpare if dictionary with reason_id`s correspond to UDT id`s
-                //if yes thatn we take the reason with that id
                 string reason = reasons.ContainsKey(data.ReasonID) ? reasons[data.ReasonID] : "Unknown";
-                dataTable.Rows.Add(data.User, data.Date, data.Time, reason);
+                dataTable.Rows.Add(data.User, data.Date, data.Time, reason, currentDate);
             }
             return dataTable;
         }

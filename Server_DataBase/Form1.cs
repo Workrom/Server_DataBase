@@ -186,6 +186,46 @@ namespace Server_DataBase
         private void Read_Button_Click(object sender, EventArgs e)
         {
             DisplayDataInDataGridView();
+            Days();
+        }
+        private void Search_Clearbtn_Click(object sender, EventArgs e)
+        {
+            if (Read_DataGridView.Rows.Count > 0)
+            {
+                Read_DataGridView.Rows.RemoveAt(Read_DataGridView.Rows.Count - 1);
+            }
+        }
+        private void Search_ClearAllbtn_Click(object sender, EventArgs e)
+        {
+            Read_DataGridView.DataSource = null;
+            Read_DataGridView.Rows.Clear();
+        }
+        private void Search_Datechkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Search_Datechkbox.Checked)
+            {
+                Search_DatePickerFrom.Enabled = true;
+                Search_DatePickerTo.Enabled = true;
+            }
+            else
+            {
+                Search_DatePickerFrom.Enabled = false;
+                Search_DatePickerTo.Enabled = false;
+            }
+        }
+
+        private void Search_Timechkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Search_Timechkbox.Checked)
+            {
+                Search_TimePickerFrom.Enabled = true;
+                Search_TimePickerTo.Enabled = true;
+            }
+            else
+            {
+                Search_TimePickerFrom.Enabled = false;
+                Search_TimePickerTo.Enabled = false;
+            }
         }
         //              Read tabpage                \\
         private void LoadInDGV()
@@ -233,6 +273,8 @@ namespace Server_DataBase
             }
             return true;
         }
+
+        //goind to change this btw
         public void DisplayDataInDataGridView()
         {
             Read_DataGridView.AutoGenerateColumns = true;
@@ -247,6 +289,19 @@ namespace Server_DataBase
             {
                 Write_ReasonCombobox.Items.Add(reason);
             }
+        }
+        public void Days()
+        {
+            DateTime currentDate = DateTime.Today;
+            foreach (DataRow row in Datatable_ReadR.Rows)
+            {
+                DateTime lastUpdateDate = Convert.ToDateTime(row["Date"]);
+                TimeSpan timeSinceLastUpdate = currentDate - lastUpdateDate;
+                int daysSinceLastUpdate = (int)timeSinceLastUpdate.TotalDays;
+                row["Days last"] = daysSinceLastUpdate.ToString();
+            }
+            int totalCountOfUpdates = Datatable_ReadR.Rows.Count;
+            Search_Dayslbl.Text = $"{totalCountOfUpdates}";
         }
     }
 }
