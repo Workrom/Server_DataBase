@@ -218,6 +218,7 @@
             Search_TimePickerTo.Size = new Size(105, 23);
             Search_TimePickerTo.TabIndex = 22;
             Search_TimePickerTo.TextAlign = HorizontalAlignment.Center;
+            Search_TimePickerTo.KeyPress += Search_TimePickerTo_KeyPress;
             // 
             // Search_TimePickerFrom
             // 
@@ -229,6 +230,7 @@
             Search_TimePickerFrom.Size = new Size(101, 23);
             Search_TimePickerFrom.TabIndex = 21;
             Search_TimePickerFrom.TextAlign = HorizontalAlignment.Center;
+            Search_TimePickerFrom.KeyPress += Search_TimePickerFrom_KeyPress;
             // 
             // Search_DatePickerTo
             // 
@@ -385,6 +387,7 @@
             // 
             Read_DataGridView.AllowUserToAddRows = false;
             Read_DataGridView.AllowUserToDeleteRows = false;
+            Read_DataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             Read_DataGridView.BackgroundColor = SystemColors.ActiveCaptionText;
             Read_DataGridView.BorderStyle = BorderStyle.Fixed3D;
             Read_DataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;

@@ -16,35 +16,14 @@ namespace Server_DataBase
         public string Reason { get; set; }
         public int ReasonID { get; set; }
     }
-    public struct UDTR_list
-    {
-        public string User { get; set; }
-        public string Date { get; set; }
-        public string Time { get; set; }
-        public string Reason { get; set; }
-    }
     internal class CSV_Handle
     {
 
         //UDTR - User Date Time Reason
-        public List<UDTR_list> UDTR_list = new List<UDTR_list>();
         public DataTable dataTable = new DataTable();
         private string UDTpath = "C:\\Users\\Workrom\\source\\repos\\Server_DataBase\\Server_DataBase\\UDT.csv";
         private string RNpath = "C:\\Users\\Workrom\\source\\repos\\Server_DataBase\\Server_DataBase\\RN.csv";
 
-        public void ListLoad()
-        {
-            DataTable datatable = Read();
-            foreach(DataRow row in datatable.Rows)
-            {
-                UDTR_list udtr_list = new UDTR_list();
-                udtr_list.User = row["User"].ToString();
-                udtr_list.Date = row["Date"].ToString();
-                udtr_list.Time = row["Time"].ToString();
-                udtr_list.Reason = row["Reason"].ToString();
-                UDTR_list.Add(udtr_list);
-            }
-        }
         public DataTable Load(string user, string date, string time, string reason)
         {
             if (dataTable == null || dataTable.Rows.Count == 0)
@@ -132,7 +111,7 @@ namespace Server_DataBase
 
             DateTime currentDate = DateTime.Today;
 
-            var UDTstr = File.ReadLines(UDTpath).Skip(1).Select(LINE => LINE.Split(',')).Select(LINES => new UDTR { User = LINES[0], Date = LINES[1], Time = LINES[2], ReasonID = int.Parse(LINES[3]) });
+            var UDTstr = File.ReadLines(UDTpath).Skip(1).Select(LINE => LINE.Split(',')).Select(LINES => new UDTR {User = LINES[0], Date = LINES[1], Time = LINES[2], ReasonID = int.Parse(LINES[3])});
             var reasons = File.ReadLines(RNpath).Skip(1).Select(line => line.Split(',')).ToDictionary(parts => int.Parse(parts[0]), parts => parts[1]);
             foreach (var data in UDTstr)
             {

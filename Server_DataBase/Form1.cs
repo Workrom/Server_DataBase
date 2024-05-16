@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Globalization;
+using System.Windows.Forms;
 
 namespace Server_DataBase
 {
@@ -19,18 +20,12 @@ namespace Server_DataBase
 
         CSV_Handle CSV = new CSV_Handle();
         public DataTable Datatable_ReadR;
-        public List<UDTR_list> udtr_listR;
 
         //          Form Main Controls             \\
         public Server_Form()
         {
             InitializeComponent();
             Datatable_ReadR = CSV.Read();
-            CSV.ListLoad();
-            udtr_listR = CSV.UDTR_list;
-
-            Search_TimePickerFrom.KeyPress += Search_TimePickerFrom_KeyPress;
-            Search_TimePickerTo.KeyPress += Search_TimePickerTo_KeyPress;
         }
 
         private void Search_TimePickerFrom_KeyPress1(object? sender, KeyPressEventArgs e)
@@ -140,7 +135,7 @@ namespace Server_DataBase
             Write_ReasonCombobox.Enabled = false;
             Write_Reasontxb.Enabled = true;
         }
-        private void TimeHandle(object sender, KeyPressEventArgs e)
+        private async void TimeHandle(object? sender, KeyPressEventArgs e)
         {
             TextBox textBox = sender as TextBox;
 
@@ -178,6 +173,7 @@ namespace Server_DataBase
             if (char.IsDigit(e.KeyChar))
             {
                 //do not allow to type non valid time like 26:77 
+                await Task.Delay(100);
                 string[] parts = textBox.Text.Split(':');
                 if (parts.Length == 2 && parts[0].Length == 2 && parts[1].Length == 2)
                 {
@@ -190,15 +186,15 @@ namespace Server_DataBase
                 }
             }
         }
-        private async void Write_Timetxb_KeyPress(object? sender, KeyPressEventArgs e)
+        private async void Write_Timetxb_KeyPress(object sender, KeyPressEventArgs e)
         {
             TimeHandle(sender, e);
         }
-        private async void Search_TimePickerFrom_KeyPress(object? sender, KeyPressEventArgs e)
+        private async void Search_TimePickerFrom_KeyPress(object sender, KeyPressEventArgs e)
         {
             TimeHandle(sender, e);
         }
-        private async void Search_TimePickerTo_KeyPress(object? sender, KeyPressEventArgs e)
+        private async void Search_TimePickerTo_KeyPress(object sender, KeyPressEventArgs e)
         {
             TimeHandle(sender, e);
         }
@@ -207,10 +203,10 @@ namespace Server_DataBase
         //              Read tabpage                \\
         private void Read_Button_Click(object sender, EventArgs e)
         {
-            List<UDTR_list> Sorted_list = CompareAndSort();
+            DataTable sortedTable = CompareAndSort();
             Read_DataGridView.AutoGenerateColumns = true;
-            Read_DataGridView.DataSource = Sorted_list;
-            //Days();
+            Read_DataGridView.DataSource = sortedTable;
+           //Days();
         }
         private void Search_Clearbtn_Click(object sender, EventArgs e)
         {
@@ -301,11 +297,6 @@ namespace Server_DataBase
         }
 
         //goind to change this btw
-        private void DisplayDataInDataGridView()
-        {
-            Read_DataGridView.AutoGenerateColumns = true;
-            Read_DataGridView.DataSource = Datatable_ReadR;
-        }
         private void PopulateComboBoxes()
         {
             //select reasons within the file and when the program opens load the reasons into a combobox
@@ -343,121 +334,129 @@ namespace Server_DataBase
             int totalCountOfUpdates = Datatable_ReadR.Rows.Count;
             Search_Dayslbl.Text = $"{totalCountOfUpdates}";
         }
-        private List<UDTR_list> CompareAndSort()
+        private DataTable CompareAndSort()
         {
-            Comparison<UDTR_list> comparison = null;
+            List<DataRow> filteredRows = new List<DataRow>();
+            foreach (DataRow row in Datatable_ReadR.Rows)
+            {
+                bool userMatch = Search_UserCombobox.SelectedIndex == 0 || row["User"].ToString() == Search_UserCombobox.SelectedItem.ToString();
+                bool reasonMatch = Search_ReasonCombobox.SelectedIndex == 0 || row["Reason"].ToString() == Search_ReasonCombobox.SelectedItem.ToString();
+               
+                bool dateFieldsEmpty = !Search_Datechkbox.Checked ||
+                       (Search_DatePickerFrom.Value == DateTime.MinValue &&
+                        Search_DatePickerTo.Value == DateTime.MinValue);
+                bool dateMatch = !Search_Datechkbox.Checked ||
+                                 (dateFieldsEmpty ||
+                                  (!string.IsNullOrWhiteSpace(row["Date"].ToString()) &&
+                                   DateTime.TryParseExact(row["Date"].ToString(), "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateValue) &&
+                                   dateValue >= Search_DatePickerFrom.Value.Date && dateValue <= Search_DatePickerTo.Value.Date));
+                
+                bool timeFieldsEmpty = string.IsNullOrWhiteSpace(Search_TimePickerFrom.Text) || string.IsNullOrWhiteSpace(Search_TimePickerTo.Text);
+                bool timeMatch = !Search_Timechkbox.Checked ||
+                                 (timeFieldsEmpty ||
+                                  (!string.IsNullOrWhiteSpace(row["Time"].ToString()) &&
+                                   TimeSpan.TryParse(row["Time"].ToString(), out TimeSpan timeValue) &&
+                                   TimeSpan.TryParse(Search_TimePickerFrom.Text, out TimeSpan timeFrom) &&
+                                   TimeSpan.TryParse(Search_TimePickerTo.Text, out TimeSpan timeTo) &&
+                                   timeValue >= timeFrom && timeValue <= timeTo));
 
-            if (Search_UserCombobox.SelectedIndex == 0 && Search_ReasonCombobox.SelectedIndex == 0
-                && !Search_Datechkbox.Checked && !Search_Timechkbox.Checked)
-            {
-                comparison = (x, y) => 0;
-            }
-            else
-            {
-                comparison = (x, y) =>
+                if (userMatch && reasonMatch && dateMatch && timeMatch)
                 {
-                    int result = 0;
-                    if (Search_UserCombobox.SelectedIndex > 0)
-                    {
-                        int userComparison = string.Compare(x.User.ToString(), y.User.ToString(), StringComparison.OrdinalIgnoreCase);
-                        if (userComparison != 0)
-                        {
-                            result = userComparison;
-                        }
-                    }
-                    if (Search_ReasonCombobox.SelectedIndex > 0)
-                    {
-                        int reasonComparison = string.Compare(x.Reason.ToString(), y.Reason.ToString(), StringComparison.OrdinalIgnoreCase);
-                        if (reasonComparison != 0)
-                        {
-                            result = reasonComparison;
-                        }
-                    }
-                    if (Search_Datechkbox.Checked)
-                    {
-                        DateTime dateX = DateTime.ParseExact(x.Date.ToString(), "dd.MM.yyyy", CultureInfo.InvariantCulture);
-                        DateTime dateY = DateTime.ParseExact(y.Date.ToString(), "dd.MM.yyyy", CultureInfo.InvariantCulture);
-                        int dateComparison = DateTime.Compare(dateX, dateY);
-                        if (dateComparison != 0)
-                        {
-                            return dateComparison;
-                        }
-                    }
-                    if (Search_Timechkbox.Checked)
-                    {
-                        DateTime timeX = DateTime.ParseExact(x.Time.ToString().Trim(), "HH:mm", CultureInfo.InvariantCulture);
-                        DateTime timeY = DateTime.ParseExact(y.Time.ToString().Trim(), "HH:mm", CultureInfo.InvariantCulture);
-                        int timeComparison = DateTime.Compare(timeX, timeY);
-                        if (timeComparison != 0)
-                        {
-                            return timeComparison;
-                        }
-                    }
-                    return result;
-                };
+                    filteredRows.Add(row);
+                }
             }
-            List<UDTR_list> S_list = Sort(udtr_listR, comparison);
-            return S_list;
-        }
-        private static List<T> Sort<T>(List<T> list, Comparison<T> comparison)
-        {
-            if (list == null || list.Count <= 1)
+            if (Search_Datechkbox.Checked || Search_Timechkbox.Checked)
             {
-                return list;
+                MergeSort(filteredRows, CompareRows);
             }
-
-            List<T> sortedList = MergeSortInternal(list, comparison);
-            list.Clear();
-            list.AddRange(sortedList);
-            return sortedList;
+            DataTable sortedTable = Datatable_ReadR.Clone();
+            foreach (var row in filteredRows)
+            {
+                sortedTable.ImportRow(row);
+            }
+            return sortedTable;
         }
-
-        private static List<T> MergeSortInternal<T>(List<T> list, Comparison<T> comparison)
+        private int CompareRows(DataRow row1, DataRow row2)
+        {
+            if (Search_UserCombobox.SelectedIndex > 0)
+            {
+                int userComparison = string.Compare(row1["User"].ToString(), row2["User"].ToString(), StringComparison.OrdinalIgnoreCase);
+                if (userComparison != 0)
+                {
+                    return userComparison;
+                }
+            }
+            if (Search_ReasonCombobox.SelectedIndex > 0)
+            {
+                int reasonComparison = string.Compare(row1["Reason"].ToString(), row2["Reason"].ToString(), StringComparison.OrdinalIgnoreCase);
+                if (reasonComparison != 0)
+                {
+                    return reasonComparison;
+                }
+            }
+            if (Search_Datechkbox.Checked)
+            {
+                DateTime date1 = DateTime.Parse(row1["Date"].ToString());
+                DateTime date2 = DateTime.Parse(row2["Date"].ToString());
+                int dateComparison = date1.CompareTo(date2);
+                if (dateComparison != 0)
+                {
+                    return dateComparison;
+                }
+            }
+            if (Search_Timechkbox.Checked)
+            {
+                DateTime time1 = DateTime.Parse(row1["Time"].ToString());
+                DateTime time2 = DateTime.Parse(row2["Time"].ToString());
+                int timeComparison = time1.CompareTo(time2);
+                if (timeComparison != 0)
+                {
+                    return timeComparison;
+                }
+            }
+            return row1.Table.Rows.IndexOf(row1).CompareTo(row2.Table.Rows.IndexOf(row2));
+        }
+        private void MergeSort(List<DataRow> list, Comparison<DataRow> comparison)
         {
             if (list.Count <= 1)
             {
-                return list;
+                return;
             }
+
             int middleIndex = list.Count / 2;
-            List<T> leftHalf = list.GetRange(0, middleIndex);
-            List<T> rightHalf = list.GetRange(middleIndex, list.Count - middleIndex);
+            List<DataRow> leftHalf = list.GetRange(0, middleIndex);
+            List<DataRow> rightHalf = list.GetRange(middleIndex, list.Count - middleIndex);
 
-            leftHalf = MergeSortInternal(leftHalf, comparison);
-            rightHalf = MergeSortInternal(rightHalf, comparison);
-
-            return Merge(leftHalf, rightHalf, comparison);
+            MergeSort(leftHalf, comparison);
+            MergeSort(rightHalf, comparison);
+            Merge(list, leftHalf, rightHalf, comparison);
         }
 
-        private static List<T> Merge<T>(List<T> left, List<T> right, Comparison<T> comparison)
+        private void Merge(List<DataRow> list, List<DataRow> left, List<DataRow> right, Comparison<DataRow> comparison)
         {
-            List<T> merged = new List<T>();
-            int leftIndex = 0;
-            int rightIndex = 0;
+            int leftIndex = 0, rightIndex = 0, mergedIndex = 0;
 
             while (leftIndex < left.Count && rightIndex < right.Count)
             {
                 if (comparison(left[leftIndex], right[rightIndex]) <= 0)
                 {
-                    merged.Add(left[leftIndex]);
-                    leftIndex++;
+                    list[mergedIndex++] = left[leftIndex++];
                 }
                 else
                 {
-                    merged.Add(right[rightIndex]);
-                    rightIndex++;
+                    list[mergedIndex++] = right[rightIndex++];
                 }
             }
+
             while (leftIndex < left.Count)
             {
-                merged.Add(left[leftIndex]);
-                leftIndex++;
+                list[mergedIndex++] = left[leftIndex++];
             }
+
             while (rightIndex < right.Count)
             {
-                merged.Add(right[rightIndex]);
-                rightIndex++;
+                list[mergedIndex++] = right[rightIndex++];
             }
-            return merged;
         }
     }
 }
