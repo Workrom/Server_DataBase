@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 
 namespace Server_DataBase
@@ -15,15 +16,36 @@ namespace Server_DataBase
         public string Reason { get; set; }
         public int ReasonID { get; set; }
     }
-
+    public struct UDTR_list
+    {
+        public string User { get; set; }
+        public string Date { get; set; }
+        public string Time { get; set; }
+        public string Reason { get; set; }
+    }
     internal class CSV_Handle
     {
 
         //UDTR - User Date Time Reason
+        public List<UDTR_list> UDTR_list = new List<UDTR_list>();
         public DataTable dataTable = new DataTable();
         private string UDTpath = "C:\\Users\\Workrom\\source\\repos\\Server_DataBase\\Server_DataBase\\UDT.csv";
         private string RNpath = "C:\\Users\\Workrom\\source\\repos\\Server_DataBase\\Server_DataBase\\RN.csv";
 
+        public void ListLoad()
+        {
+
+
+            foreach(DataRow row in dataTable.Rows)
+            {
+                UDTR_list udtr_list = new UDTR_list();
+                udtr_list.User = row["User"].ToString();
+                udtr_list.Date = row["Date"].ToString();
+                udtr_list.Time = row["Time"].ToString();
+                udtr_list.Reason = row["Reason"].ToString();
+                UDTR_list.Add(udtr_list);
+            }
+        }
         public DataTable Load(string user, string date, string time, string reason)
         {
             if (dataTable == null || dataTable.Rows.Count == 0)

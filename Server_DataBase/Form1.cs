@@ -1,4 +1,6 @@
+using System;
 using System.Data;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
@@ -20,17 +22,19 @@ namespace Server_DataBase
 
         CSV_Handle CSV = new CSV_Handle();
         public DataTable Datatable_ReadR;
+        public List<UDTR_list> udtr_listR;
 
         //          Form Main Controls             \\
         public Form1()
         {
             InitializeComponent();
             Datatable_ReadR = CSV.Read();
-
+            CSV.ListLoad();
+            udtr_listR = CSV.UDTR_list;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            PopulateComboBoxWithReasons();
+            PopulateComboBoxes();
         }
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -185,8 +189,10 @@ namespace Server_DataBase
         //              Read tabpage                \\
         private void Read_Button_Click(object sender, EventArgs e)
         {
-            DisplayDataInDataGridView();
-            Days();
+            List <UDTR_list> Sorted_list = CompareAndSort();
+            Read_DataGridView.AutoGenerateColumns = true;
+            Read_DataGridView.DataSource = Sorted_list;
+           //Days();
         }
         private void Search_Clearbtn_Click(object sender, EventArgs e)
         {
@@ -194,11 +200,13 @@ namespace Server_DataBase
             {
                 Read_DataGridView.Rows.RemoveAt(Read_DataGridView.Rows.Count - 1);
             }
+            Search_Dayslbl.Text = Read_DataGridView.RowCount.ToString();
         }
         private void Search_ClearAllbtn_Click(object sender, EventArgs e)
         {
             Read_DataGridView.DataSource = null;
             Read_DataGridView.Rows.Clear();
+            Search_Dayslbl.Text = Read_DataGridView.RowCount.ToString();
         }
         private void Search_Datechkbox_CheckedChanged(object sender, EventArgs e)
         {
@@ -230,7 +238,7 @@ namespace Server_DataBase
         //              Read tabpage                \\
         private void LoadInDGV()
         {
-            if (Check_ForDataValidation())
+            if (CheckForDataValidation())
             {
                 string user = Write_Usertxb.Text;
                 string date = Write_datetimepicker.Text;
@@ -248,7 +256,7 @@ namespace Server_DataBase
                 Write_DataGridView.DataSource = CSV.Load(user, date, time, reason);
             }
         }
-        private bool Check_ForDataValidation()
+        private bool CheckForDataValidation()
         {
             //So check for if the textbox is empty 
             //if it is dont load it in dgv
@@ -275,22 +283,36 @@ namespace Server_DataBase
         }
 
         //goind to change this btw
-        public void DisplayDataInDataGridView()
+        private void DisplayDataInDataGridView()
         {
             Read_DataGridView.AutoGenerateColumns = true;
             Read_DataGridView.DataSource = Datatable_ReadR;
         }
-        public void PopulateComboBoxWithReasons()
+        private void PopulateComboBoxes()
         {
             //select reasons within the file and when the program opens load the reasons into a combobox
             var Reasons = Datatable_ReadR.AsEnumerable().Select(x => x.Field<string>("Reason")).Distinct();
+            var Users = Datatable_ReadR.AsEnumerable().Select(x => x.Field<string>("User")).Distinct();
             Write_ReasonCombobox.Items.Clear();
+            Search_ReasonCombobox.Items.Clear();
+            Search_UserCombobox.Items.Clear();
+
+            Search_ReasonCombobox.Items.Add("All");
+            Search_UserCombobox.Items.Add("All");
+
+            Search_ReasonCombobox.SelectedIndex = 0;
+            Search_UserCombobox.SelectedIndex = 0;
             foreach (var reason in Reasons)
             {
                 Write_ReasonCombobox.Items.Add(reason);
+                Search_ReasonCombobox.Items.Add(reason);
+            }
+            foreach(var user in Users)
+            {
+                Search_UserCombobox.Items.Add(user);
             }
         }
-        public void Days()
+        private void Days()
         {
             DateTime currentDate = DateTime.Today;
             foreach (DataRow row in Datatable_ReadR.Rows)
@@ -302,6 +324,122 @@ namespace Server_DataBase
             }
             int totalCountOfUpdates = Datatable_ReadR.Rows.Count;
             Search_Dayslbl.Text = $"{totalCountOfUpdates}";
+        }
+        private List<UDTR_list> CompareAndSort()
+        {
+            Comparison<UDTR_list> comparison = null;
+
+            if (Search_UserCombobox.SelectedIndex == 0 && Search_ReasonCombobox.SelectedIndex == 0
+                && !Search_Datechkbox.Checked && !Search_Timechkbox.Checked)
+            {
+                comparison = (x, y) => 0;
+            }
+            else
+            {
+                comparison = (x, y) =>
+                {
+                    int result = 0;
+                    if (Search_UserCombobox.SelectedIndex > 0)
+                    {
+                        int userComparison = string.Compare(x.User.ToString(), y.User.ToString(), StringComparison.OrdinalIgnoreCase);
+                        if (userComparison != 0)
+                        {
+                            result = userComparison;
+                        }
+                    }
+                    if (Search_ReasonCombobox.SelectedIndex > 0)
+                    {
+                        int reasonComparison = string.Compare(x.Reason.ToString(), y.Reason.ToString(), StringComparison.OrdinalIgnoreCase);
+                        if (reasonComparison != 0)
+                        {
+                            result = reasonComparison;
+                        }
+                    }
+                    if (Search_Datechkbox.Checked)
+                    {
+                        DateTime dateX = DateTime.ParseExact(x.Date.ToString(), "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                        DateTime dateY = DateTime.ParseExact(y.Date.ToString(), "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                        int dateComparison = DateTime.Compare(dateX, dateY);
+                        if (dateComparison != 0)
+                        {
+                            return dateComparison;
+                        }
+                    }
+                    if (Search_Timechkbox.Checked)
+                    {
+                        DateTime timeX = DateTime.ParseExact(x.Time.ToString(), "HH:mm", CultureInfo.InvariantCulture);
+                        DateTime timeY = DateTime.ParseExact(y.Time.ToString(), "HH:mm", CultureInfo.InvariantCulture);
+                        int timeComparison = DateTime.Compare(timeX, timeY);
+                        if (timeComparison != 0)
+                        {
+                            return timeComparison;
+                        }
+                    }
+                    return result;
+                };
+                }
+            List<UDTR_list> S_list = Sort(udtr_listR, comparison);
+            return S_list;
+        }
+        private static List<T> Sort<T>(List<T> list, Comparison<T> comparison)
+        {
+            if (list == null || list.Count <= 1)
+            {
+                return list;
+            }
+
+            List<T> sortedList = MergeSortInternal(list, comparison);
+            list.Clear();
+            list.AddRange(sortedList);
+            return sortedList;
+        }
+
+        private static List<T> MergeSortInternal<T>(List<T> list, Comparison<T> comparison)
+        {
+            if (list.Count <= 1)
+            {
+                return list;
+            }
+            int middleIndex = list.Count / 2;
+            List<T> leftHalf = list.GetRange(0, middleIndex);
+            List<T> rightHalf = list.GetRange(middleIndex, list.Count - middleIndex);
+
+            leftHalf = MergeSortInternal(leftHalf, comparison);
+            rightHalf = MergeSortInternal(rightHalf, comparison);
+
+            return Merge(leftHalf, rightHalf, comparison);
+        }
+
+        private static List<T> Merge<T>(List<T> left, List<T> right, Comparison<T> comparison)
+        {
+            List<T> merged = new List<T>();
+            int leftIndex = 0;
+            int rightIndex = 0;
+
+            while (leftIndex < left.Count && rightIndex < right.Count)
+            {
+                if (comparison(left[leftIndex], right[rightIndex]) <= 0)
+                {
+                    merged.Add(left[leftIndex]);
+                    leftIndex++;
+                }
+                else
+                {
+                    merged.Add(right[rightIndex]);
+                    rightIndex++;
+                }
+            }
+            while (leftIndex < left.Count)
+            {
+                merged.Add(left[leftIndex]);
+                leftIndex++;
+            }
+            while (rightIndex < right.Count)
+            {
+                merged.Add(right[rightIndex]);
+                rightIndex++;
+            }
+            return merged;
         }
     }
 }
