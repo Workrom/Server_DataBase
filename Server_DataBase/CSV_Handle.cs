@@ -34,9 +34,8 @@ namespace Server_DataBase
 
         public void ListLoad()
         {
-
-
-            foreach(DataRow row in dataTable.Rows)
+            DataTable datatable = Read();
+            foreach(DataRow row in datatable.Rows)
             {
                 UDTR_list udtr_list = new UDTR_list();
                 udtr_list.User = row["User"].ToString();

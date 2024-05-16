@@ -1,13 +1,10 @@
 using System;
 using System.Data;
 using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows.Forms;
 
 namespace Server_DataBase
 {
-    public partial class Form1 : Form
+    public partial class Server_Form : Form
     {
         //... Make the Form movable
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -25,13 +22,22 @@ namespace Server_DataBase
         public List<UDTR_list> udtr_listR;
 
         //          Form Main Controls             \\
-        public Form1()
+        public Server_Form()
         {
             InitializeComponent();
             Datatable_ReadR = CSV.Read();
             CSV.ListLoad();
             udtr_listR = CSV.UDTR_list;
+
+            Search_TimePickerFrom.KeyPress += Search_TimePickerFrom_KeyPress;
+            Search_TimePickerTo.KeyPress += Search_TimePickerTo_KeyPress;
         }
+
+        private void Search_TimePickerFrom_KeyPress1(object? sender, KeyPressEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             PopulateComboBoxes();
@@ -134,65 +140,77 @@ namespace Server_DataBase
             Write_ReasonCombobox.Enabled = false;
             Write_Reasontxb.Enabled = true;
         }
-        private async void Write_Timetxb_KeyPress(object? sender, KeyPressEventArgs e)
+        private void TimeHandle(object sender, KeyPressEventArgs e)
         {
-            //why error handle when error cannot happend :) (probably not true but still i tried)
+            TextBox textBox = sender as TextBox;
+
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ':')
             {
                 e.Handled = true;
                 return;
             }
-            if (Write_Timetxb.Text.Length >= 5 && !char.IsControl(e.KeyChar))
+            if (textBox.Text.Length >= 5 && !char.IsControl(e.KeyChar))
             {
                 e.Handled = true;
                 return;
             }
             if (char.IsDigit(e.KeyChar))
             {
-                if (Write_Timetxb.Text.Length == 2 && e.KeyChar != ':')
+                if (textBox.Text.Length == 2 && e.KeyChar != ':')
                 {
-                    Write_Timetxb.Text += ":" + e.KeyChar;
-                    Write_Timetxb.SelectionStart = Write_Timetxb.Text.Length;
+                    textBox.Text += ":" + e.KeyChar;
+                    textBox.SelectionStart = textBox.Text.Length;
                     e.Handled = true;
                 }
-                else if (Write_Timetxb.Text.Length == 2 && e.KeyChar == ':')
+                else if (textBox.Text.Length == 2 && e.KeyChar == ':')
                 {
                     e.Handled = true;
                 }
-                else if (Write_Timetxb.Text.Length == 3 && e.KeyChar == ':')
+                else if (textBox.Text.Length == 3 && e.KeyChar == ':')
                 {
                     e.Handled = true;
                 }
             }
-            else if (e.KeyChar == ':' && Write_Timetxb.Text.Length == 5)
+            else if (e.KeyChar == ':' && textBox.Text.Length == 5)
             {
                 e.Handled = true;
             }
             if (char.IsDigit(e.KeyChar))
             {
                 //do not allow to type non valid time like 26:77 
-                await Task.Delay(100);
-                string[] parts = Write_Timetxb.Text.Split(':');
+                string[] parts = textBox.Text.Split(':');
                 if (parts.Length == 2 && parts[0].Length == 2 && parts[1].Length == 2)
                 {
                     //split into HH and mm and cool way to select non valid to valid time
                     int hours = Math.Min(int.Parse(parts[0]), 23);
                     int minutes = Math.Min(int.Parse(parts[1]), 59);
-                    Write_Timetxb.Text = $"{hours:D2}:{minutes:D2}";
-                    Write_Timetxb.SelectionStart = Write_Timetxb.Text.Length;
+                    textBox.Text = $"{hours:D2}:{minutes:D2}";
+                    textBox.SelectionStart = textBox.Text.Length;
                     e.Handled = true;
                 }
             }
+        }
+        private async void Write_Timetxb_KeyPress(object? sender, KeyPressEventArgs e)
+        {
+            TimeHandle(sender, e);
+        }
+        private async void Search_TimePickerFrom_KeyPress(object? sender, KeyPressEventArgs e)
+        {
+            TimeHandle(sender, e);
+        }
+        private async void Search_TimePickerTo_KeyPress(object? sender, KeyPressEventArgs e)
+        {
+            TimeHandle(sender, e);
         }
         //              Write tabpage               \\
 
         //              Read tabpage                \\
         private void Read_Button_Click(object sender, EventArgs e)
         {
-            List <UDTR_list> Sorted_list = CompareAndSort();
+            List<UDTR_list> Sorted_list = CompareAndSort();
             Read_DataGridView.AutoGenerateColumns = true;
             Read_DataGridView.DataSource = Sorted_list;
-           //Days();
+            //Days();
         }
         private void Search_Clearbtn_Click(object sender, EventArgs e)
         {
@@ -307,7 +325,7 @@ namespace Server_DataBase
                 Write_ReasonCombobox.Items.Add(reason);
                 Search_ReasonCombobox.Items.Add(reason);
             }
-            foreach(var user in Users)
+            foreach (var user in Users)
             {
                 Search_UserCombobox.Items.Add(user);
             }
@@ -367,8 +385,8 @@ namespace Server_DataBase
                     }
                     if (Search_Timechkbox.Checked)
                     {
-                        DateTime timeX = DateTime.ParseExact(x.Time.ToString(), "HH:mm", CultureInfo.InvariantCulture);
-                        DateTime timeY = DateTime.ParseExact(y.Time.ToString(), "HH:mm", CultureInfo.InvariantCulture);
+                        DateTime timeX = DateTime.ParseExact(x.Time.ToString().Trim(), "HH:mm", CultureInfo.InvariantCulture);
+                        DateTime timeY = DateTime.ParseExact(y.Time.ToString().Trim(), "HH:mm", CultureInfo.InvariantCulture);
                         int timeComparison = DateTime.Compare(timeX, timeY);
                         if (timeComparison != 0)
                         {
@@ -377,7 +395,7 @@ namespace Server_DataBase
                     }
                     return result;
                 };
-                }
+            }
             List<UDTR_list> S_list = Sort(udtr_listR, comparison);
             return S_list;
         }

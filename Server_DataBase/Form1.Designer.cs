@@ -1,6 +1,6 @@
 ﻿namespace Server_DataBase
 {
-    partial class Form1
+    partial class Server_Form
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Server_Form));
             ServerPanel = new Panel();
             Server_MainPanel = new Panel();
             Find_Button = new Button();
@@ -679,6 +679,7 @@
             // 
             // Button_Gif
             // 
+            Button_Gif.ErrorImage = (Image)resources.GetObject("Button_Gif.ErrorImage");
             Button_Gif.Image = (Image)resources.GetObject("Button_Gif.Image");
             Button_Gif.Location = new Point(10, 3);
             Button_Gif.Margin = new Padding(3, 2, 3, 2);
@@ -690,7 +691,7 @@
             Button_Gif.Visible = false;
             Button_Gif.MouseEnter += Button_Gif_MouseEnter;
             // 
-            // Form1
+            // Server_Form
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -707,7 +708,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 2, 3, 2);
-            Name = "Form1";
+            Name = "Server_Form";
             StartPosition = FormStartPosition.CenterScreen;
             Load += Form1_Load;
             MouseDown += Form1_MouseDown;
