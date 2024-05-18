@@ -75,6 +75,7 @@
             HomePanel = new Panel();
             ExitButton = new Button();
             Button_Gif = new PictureBox();
+            Hide_btn = new PictureBox();
             ServerPanel.SuspendLayout();
             Server_MainPanel.SuspendLayout();
             Server_SearchPanel.SuspendLayout();
@@ -82,6 +83,7 @@
             Server_WritePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Write_DataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Button_Gif).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Hide_btn).BeginInit();
             SuspendLayout();
             // 
             // ServerPanel
@@ -328,6 +330,7 @@
             Search_Exportbtn.TabIndex = 4;
             Search_Exportbtn.Text = "Export";
             Search_Exportbtn.UseVisualStyleBackColor = false;
+            Search_Exportbtn.Click += Search_Exportbtn_Click;
             // 
             // Search_ClearAllbtn
             // 
@@ -395,7 +398,6 @@
             Read_DataGridView.Location = new Point(298, 3);
             Read_DataGridView.Margin = new Padding(3, 2, 3, 2);
             Read_DataGridView.Name = "Read_DataGridView";
-            Read_DataGridView.ReadOnly = true;
             Read_DataGridView.RowHeadersVisible = false;
             Read_DataGridView.RowHeadersWidth = 51;
             Read_DataGridView.RowTemplate.Height = 29;
@@ -619,7 +621,6 @@
             Write_DataGridView.Location = new Point(367, 3);
             Write_DataGridView.Margin = new Padding(3, 2, 3, 2);
             Write_DataGridView.Name = "Write_DataGridView";
-            Write_DataGridView.ReadOnly = true;
             Write_DataGridView.RowHeadersVisible = false;
             Write_DataGridView.RowHeadersWidth = 51;
             Write_DataGridView.RowTemplate.Height = 29;
@@ -669,6 +670,7 @@
             // 
             ExitButton.BackgroundImage = Properties.Resources.Exit_Button1;
             ExitButton.BackgroundImageLayout = ImageLayout.Stretch;
+            ExitButton.Cursor = Cursors.Hand;
             ExitButton.FlatAppearance.BorderColor = Color.FromArgb(17, 17, 17);
             ExitButton.FlatStyle = FlatStyle.Flat;
             ExitButton.Location = new Point(10, 3);
@@ -694,6 +696,18 @@
             Button_Gif.Visible = false;
             Button_Gif.MouseEnter += Button_Gif_MouseEnter;
             // 
+            // Hide_btn
+            // 
+            Hide_btn.Cursor = Cursors.Hand;
+            Hide_btn.Image = Properties.Resources.Hide_Buttont;
+            Hide_btn.Location = new Point(68, 3);
+            Hide_btn.Name = "Hide_btn";
+            Hide_btn.Size = new Size(50, 43);
+            Hide_btn.SizeMode = PictureBoxSizeMode.StretchImage;
+            Hide_btn.TabIndex = 6;
+            Hide_btn.TabStop = false;
+            Hide_btn.Click += pictureBox1_Click;
+            // 
             // Server_Form
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -701,6 +715,7 @@
             BackColor = Color.FromArgb(17, 17, 17);
             ClientSize = new Size(1010, 500);
             ControlBox = false;
+            Controls.Add(Hide_btn);
             Controls.Add(ServerButton);
             Controls.Add(HomeButton);
             Controls.Add(Button_Gif);
@@ -724,6 +739,7 @@
             Server_WritePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Write_DataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)Button_Gif).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Hide_btn).EndInit();
             ResumeLayout(false);
         }
 
@@ -775,5 +791,6 @@
         private DateTimePicker Search_DatePickerFrom;
         private Label Search_Dayslbl;
         private Label Search_lbl1;
+        private PictureBox Hide_btn;
     }
 }

@@ -17,7 +17,6 @@ namespace Server_DataBase
         public static extern bool ReleaseCapture();
         //...
 
-
         CSV_Handle CSV = new CSV_Handle();
         public DataTable Datatable_ReadR;
 
@@ -27,12 +26,10 @@ namespace Server_DataBase
             InitializeComponent();
             Datatable_ReadR = CSV.Read();
         }
-
         private void Search_TimePickerFrom_KeyPress1(object? sender, KeyPressEventArgs e)
         {
             throw new NotImplementedException();
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             PopulateComboBoxes();
@@ -45,6 +42,10 @@ namespace Server_DataBase
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
         private void HomeButton_Click(object sender, EventArgs e)
         {
             //show-HomePanel and HomeButton
@@ -56,7 +57,6 @@ namespace Server_DataBase
             HomePanel.Visible = true;
             ServerPanel.Visible = false;
         }
-
         private void ServerButton_Click(object sender, EventArgs e)
         {
             //show-ServerPanel and ServerButton
@@ -110,7 +110,15 @@ namespace Server_DataBase
         }
         private void WriteBut_Click(object sender, EventArgs e)
         {
-            CSV.Write(CSV.dataTable);
+            if(Write_DataGridView.Rows.Count > 0)
+            {
+                CSV.Write(CSV.dataTable);
+                MessageBox.Show("Data has been written!");
+            }
+            else
+            {
+                MessageBox.Show("No data to write");
+            }
         }
         private void Write_ClearBut_Click(object sender, EventArgs e)
         {
@@ -203,10 +211,11 @@ namespace Server_DataBase
         //              Read tabpage                \\
         private void Read_Button_Click(object sender, EventArgs e)
         {
+            Days();
             DataTable sortedTable = CompareAndSort();
             Read_DataGridView.AutoGenerateColumns = true;
             Read_DataGridView.DataSource = sortedTable;
-           //Days();
+            Search_Dayslbl.Text = Read_DataGridView.RowCount.ToString();
         }
         private void Search_Clearbtn_Click(object sender, EventArgs e)
         {
@@ -235,7 +244,6 @@ namespace Server_DataBase
                 Search_DatePickerTo.Enabled = false;
             }
         }
-
         private void Search_Timechkbox_CheckedChanged(object sender, EventArgs e)
         {
             if (Search_Timechkbox.Checked)
@@ -249,7 +257,52 @@ namespace Server_DataBase
                 Search_TimePickerTo.Enabled = false;
             }
         }
+        void Search_Exportbtn_Click(object sender, EventArgs e)
+        {
+            if (Read_DataGridView.RowCount > 0)
+            {
+                using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+                {
+                    if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        string folderPath = folderBrowserDialog.SelectedPath;
+                        ExportData(folderPath);
+                    }
+                }
+                MessageBox.Show("Exported!");
+            }
+            else
+            {
+                MessageBox.Show("Nothing to export");
+            }
+        }
         //              Read tabpage                \\
+        private void ExportData(string folderPath)
+        {
+            foreach (DataGridViewRow row in Read_DataGridView.Rows)
+            {
+                if (!row.IsNewRow)
+                {
+                    string dateValue = row.Cells["Date"].Value.ToString();
+                    if (DateTime.TryParseExact(dateValue, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
+                    {
+                        string fileName = Path.Combine(folderPath, $"{date.ToString("dd-MM-yyyy")}.txt");
+                        using (StreamWriter writer = new StreamWriter(fileName, true))
+                        {
+                            List<string> rowData = new List<string>();
+                            for (int i = 0; i < row.Cells.Count; i++)
+                            {
+                                if (Read_DataGridView.Columns[i].Name != "Date")
+                                {
+                                    rowData.Add(row.Cells[i].Value.ToString());
+                                }
+                            }
+                            writer.WriteLine(string.Join(", ", rowData));
+                        }
+                    }
+                }
+            }
+        }
         private void LoadInDGV()
         {
             if (CheckForDataValidation())
@@ -257,7 +310,7 @@ namespace Server_DataBase
                 string user = Write_Usertxb.Text;
                 string date = Write_datetimepicker.Text;
                 string time = Write_Timetxb.Text;
-                string reason = "";
+                string reason;
                 if (Write_ReasonCombobox.Enabled == true)
                 {
                     reason = Write_ReasonCombobox.Text;
@@ -295,8 +348,6 @@ namespace Server_DataBase
             }
             return true;
         }
-
-        //goind to change this btw
         private void PopulateComboBoxes()
         {
             //select reasons within the file and when the program opens load the reasons into a combobox
@@ -329,10 +380,8 @@ namespace Server_DataBase
                 DateTime lastUpdateDate = Convert.ToDateTime(row["Date"]);
                 TimeSpan timeSinceLastUpdate = currentDate - lastUpdateDate;
                 int daysSinceLastUpdate = (int)timeSinceLastUpdate.TotalDays;
-                row["Days last"] = daysSinceLastUpdate.ToString();
+                row["Days S.U"] = daysSinceLastUpdate.ToString();
             }
-            int totalCountOfUpdates = Datatable_ReadR.Rows.Count;
-            Search_Dayslbl.Text = $"{totalCountOfUpdates}";
         }
         private DataTable CompareAndSort()
         {
@@ -341,7 +390,7 @@ namespace Server_DataBase
             {
                 bool userMatch = Search_UserCombobox.SelectedIndex == 0 || row["User"].ToString() == Search_UserCombobox.SelectedItem.ToString();
                 bool reasonMatch = Search_ReasonCombobox.SelectedIndex == 0 || row["Reason"].ToString() == Search_ReasonCombobox.SelectedItem.ToString();
-               
+
                 bool dateFieldsEmpty = !Search_Datechkbox.Checked ||
                        (Search_DatePickerFrom.Value == DateTime.MinValue &&
                         Search_DatePickerTo.Value == DateTime.MinValue);
@@ -350,7 +399,7 @@ namespace Server_DataBase
                                   (!string.IsNullOrWhiteSpace(row["Date"].ToString()) &&
                                    DateTime.TryParseExact(row["Date"].ToString(), "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateValue) &&
                                    dateValue >= Search_DatePickerFrom.Value.Date && dateValue <= Search_DatePickerTo.Value.Date));
-                
+
                 bool timeFieldsEmpty = string.IsNullOrWhiteSpace(Search_TimePickerFrom.Text) || string.IsNullOrWhiteSpace(Search_TimePickerTo.Text);
                 bool timeMatch = !Search_Timechkbox.Checked ||
                                  (timeFieldsEmpty ||
@@ -458,5 +507,6 @@ namespace Server_DataBase
                 list[mergedIndex++] = right[rightIndex++];
             }
         }
+
     }
 }

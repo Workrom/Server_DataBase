@@ -121,17 +121,14 @@
   <data name="Find_Button_On" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\net6.0-windows\Images\Find_Button_On.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Write_Button_Off" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\bin\Debug\net6.0-windows\Images\Write_Button_Off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Home_Image_Resized" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\net6.0-windows\Images\Home_Image_Resized.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Write_Button_On" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\net6.0-windows\Images\Write_Button_On.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Home_Button_On" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\bin\Debug\net6.0-windows\Images\Home_Button_On.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Write_Button_Off" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\net6.0-windows\Images\Write_Button_Off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Home_Button_Off" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\net6.0-windows\Images\Home_Button_Off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -141,6 +138,9 @@
   </data>
   <data name="Server_Button_On" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\net6.0-windows\Images\Server_Button_On.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Home_Button_On" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\net6.0-windows\Images\Home_Button_On.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Server_Button_Off" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\net6.0-windows\Images\Server_Button_Off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -156,5 +156,8 @@
   </data>
   <data name="Exit_Button2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\net6.0-windows\Images\Exit_Button.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hide_Buttont" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\net6.0-windows\Images\Hide_Buttont.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

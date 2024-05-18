@@ -103,6 +103,16 @@ namespace Server_DataBase.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Hide_Buttont {
+            get {
+                object obj = ResourceManager.GetObject("Hide_Buttont", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Home_Button_Off {
             get {
                 object obj = ResourceManager.GetObject("Home_Button_Off", resourceCulture);
