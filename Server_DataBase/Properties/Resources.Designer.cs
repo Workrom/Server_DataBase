@@ -63,6 +63,16 @@ namespace Server_DataBase.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Exit_Button {
+            get {
+                object obj = ResourceManager.GetObject("Exit_Button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Exit_Button1 {
             get {
                 object obj = ResourceManager.GetObject("Exit_Button1", resourceCulture);
@@ -177,6 +187,16 @@ namespace Server_DataBase.Properties {
             get {
                 object obj = ResourceManager.GetObject("SM_Logo_OnB", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon SM_Logo_OnB1 {
+            get {
+                object obj = ResourceManager.GetObject("SM_Logo_OnB1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

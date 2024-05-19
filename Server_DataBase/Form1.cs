@@ -23,7 +23,9 @@ namespace Server_DataBase
         //          Form Main Controls             \\
         public Server_Form()
         {
+            this.Icon = Properties.Resources.SM_Logo_OnB1;
             InitializeComponent();
+            CSV.FilesExist();
             Datatable_ReadR = CSV.Read();
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -108,7 +110,6 @@ namespace Server_DataBase
         {
             if (Write_DataGridView.Rows.Count > 0)
             {
-                CSV.FilesExist();
                 CSV.Write(CSV.dataTable);
                 Datatable_ReadR = CSV.Read();
             }
