@@ -90,8 +90,8 @@
             // 
             ServerPanel.BackColor = Color.Black;
             ServerPanel.Controls.Add(Server_MainPanel);
-            ServerPanel.Controls.Add(Server_SearchPanel);
             ServerPanel.Controls.Add(Server_WritePanel);
+            ServerPanel.Controls.Add(Server_SearchPanel);
             ServerPanel.Location = new Point(10, 50);
             ServerPanel.Margin = new Padding(3, 2, 3, 2);
             ServerPanel.Name = "ServerPanel";

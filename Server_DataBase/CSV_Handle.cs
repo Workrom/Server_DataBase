@@ -41,19 +41,19 @@ namespace Server_DataBase
 
             return dataTable;
         }
-
         public void Write(DataTable dataTable)
         {
             if (dataTable == null || dataTable.Rows.Count == 0)
             {
                 return;
             }
-
             var existingReasons = new Dictionary<string, int>();
+            var existingEntries = new HashSet<string>();
 
+            // Read existing reasons and existing entries
             using (var reader = new StreamReader(RNpath))
             {
-                //skip header row
+                // Skip header row
                 reader.ReadLine();
                 string line;
                 while ((line = reader.ReadLine()) != null)
@@ -62,7 +62,16 @@ namespace Server_DataBase
                     existingReasons.Add(parts[1].Trim().ToLower(), int.Parse(parts[0]));
                 }
             }
-
+            using (var reader = new StreamReader(UDTpath))
+            {
+                // Skip header row if it exists
+                reader.ReadLine();
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    existingEntries.Add(line.Trim().ToLower());
+                }
+            }
             using (StreamWriter stwUDT = new StreamWriter(UDTpath, true))
             using (StreamWriter stwRN = new StreamWriter(RNpath, true))
             {
@@ -71,22 +80,27 @@ namespace Server_DataBase
                     string user = row["User"].ToString();
                     string date = row["Date"].ToString();
                     string time = row["Time"].ToString();
-
-                    //so i check reasons by ToLower() which is dumb
-                    //and it will be smarter to use Regex
-
-                    //so i just found out how hard it is to match 2 string via treshold
-                    //no thx i will rely on user input
                     string reason = row["Reason"].ToString().Trim().ToLower();
 
-                    stwUDT.WriteLine($"{user},{date},{time},{existingReasons[reason]}");
-
+                    // check if the reason already exists ykwis
                     if (!existingReasons.ContainsKey(reason))
                     {
-                        // Create a new ID if the reason is new
                         int newReasonID = existingReasons.Count + 1;
                         existingReasons.Add(reason, newReasonID);
                         stwRN.WriteLine($"{newReasonID},{reason}");
+                    }
+                    int reasonID = existingReasons[reason];
+                    string entry = $"{user},{date},{time},{reasonID}".ToLower();
+                    // pnly write if not in the hashset
+                    if (!existingEntries.Contains(entry))
+                    {
+                        stwUDT.WriteLine(entry);
+                        existingEntries.Add(entry);
+                        MessageBox.Show("New data has been written");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"{entry} with {reason} already exists");
                     }
                 }
             }
@@ -109,9 +123,7 @@ namespace Server_DataBase
             dataTable.Columns.Add("Reason");
             dataTable.Columns.Add("Days S.U", typeof(string));
 
-            //DateTime currentDate = DateTime.Today;
-
-            var UDTstr = File.ReadLines(UDTpath).Skip(1).Select(LINE => LINE.Split(',')).Select(LINES => new UDTR {User = LINES[0], Date = LINES[1], Time = LINES[2], ReasonID = int.Parse(LINES[3])});
+            var UDTstr = File.ReadLines(UDTpath).Skip(1).Select(LINE => LINE.Split(',')).Select(LINES => new UDTR { User = LINES[0], Date = LINES[1], Time = LINES[2], ReasonID = int.Parse(LINES[3]) });
             var reasons = File.ReadLines(RNpath).Skip(1).Select(line => line.Split(',')).ToDictionary(parts => int.Parse(parts[0]), parts => parts[1]);
             foreach (var data in UDTstr)
             {

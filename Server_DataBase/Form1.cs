@@ -26,10 +26,6 @@ namespace Server_DataBase
             InitializeComponent();
             Datatable_ReadR = CSV.Read();
         }
-        private void Search_TimePickerFrom_KeyPress1(object? sender, KeyPressEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
         private void Form1_Load(object sender, EventArgs e)
         {
             PopulateComboBoxes();
@@ -110,10 +106,10 @@ namespace Server_DataBase
         }
         private void WriteBut_Click(object sender, EventArgs e)
         {
-            if(Write_DataGridView.Rows.Count > 0)
+            if (Write_DataGridView.Rows.Count > 0)
             {
                 CSV.Write(CSV.dataTable);
-                MessageBox.Show("Data has been written!");
+                Datatable_ReadR = CSV.Read();
             }
             else
             {
