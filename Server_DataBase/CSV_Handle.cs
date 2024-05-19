@@ -21,9 +21,8 @@ namespace Server_DataBase
 
         //UDTR - User Date Time Reason
         public DataTable dataTable = new DataTable();
-        private string UDTpath = "C:\\Users\\Workrom\\source\\repos\\Server_DataBase\\Server_DataBase\\UDT.csv";
-        private string RNpath = "C:\\Users\\Workrom\\source\\repos\\Server_DataBase\\Server_DataBase\\RN.csv";
-
+        private string UDTpath = Path.Combine(Application.StartupPath, "UDT.csv");
+        private string RNpath = Path.Combine(Application.StartupPath, "RN.csv");
         public DataTable Load(string user, string date, string time, string reason)
         {
             if (dataTable == null || dataTable.Rows.Count == 0)
@@ -40,6 +39,24 @@ namespace Server_DataBase
             dataTable.Rows.Add(newRow);
 
             return dataTable;
+        }
+        public void FilesExist()
+        {
+            if (!File.Exists(UDTpath))
+            {
+                using (StreamWriter sw = new StreamWriter(UDTpath))
+                {
+                    sw.WriteLine("User,Date,Time,ReasonID");
+                }
+            }
+
+            if (!File.Exists(RNpath))
+            {
+                using (StreamWriter sw = new StreamWriter(RNpath))
+                {
+                    sw.WriteLine("ID,Reason");
+                }
+            }
         }
         public void Write(DataTable dataTable)
         {

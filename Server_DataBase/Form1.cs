@@ -108,6 +108,7 @@ namespace Server_DataBase
         {
             if (Write_DataGridView.Rows.Count > 0)
             {
+                CSV.FilesExist();
                 CSV.Write(CSV.dataTable);
                 Datatable_ReadR = CSV.Read();
             }
