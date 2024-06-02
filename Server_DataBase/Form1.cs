@@ -127,6 +127,7 @@ namespace Server_DataBase
         }
         private void Write_ClearAllBut_Click(object sender, EventArgs e)
         {
+            Write_DataGridView.DataSource = null;
             Write_DataGridView.Rows.Clear();
         }
 
@@ -505,6 +506,5 @@ namespace Server_DataBase
                 list[mergedIndex++] = right[rightIndex++];
             }
         }
-
     }
 }

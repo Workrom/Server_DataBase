@@ -30,26 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Server_Form));
             ServerPanel = new Panel();
-            Server_MainPanel = new Panel();
-            Find_Button = new Button();
-            Write_Button = new Button();
-            Server_WritePanel = new Panel();
-            Write_OtherRNbtn = new RadioButton();
-            Write_ExisRNbtn = new RadioButton();
-            Write_Timetxb = new TextBox();
-            Write_datetimepicker = new DateTimePicker();
-            Write_TimeLabel = new Label();
-            Write_DateLabel = new Label();
-            Write_ReasonCombobox = new ComboBox();
-            Write_Reasontxb = new TextBox();
-            Write_Usertxb = new TextBox();
-            Write_ReasonLabel = new Label();
-            Write_UserLabel = new Label();
-            Write_LoadBut = new Button();
-            WriteBut = new Button();
-            Write_ClearBut = new Button();
-            Write_ClearAllBut = new Button();
-            Write_DataGridView = new DataGridView();
             Server_SearchPanel = new Panel();
             Search_Dayslbl = new Label();
             Search_lbl1 = new Label();
@@ -70,6 +50,26 @@
             Search_Clearbtn = new Button();
             Search_Button = new Button();
             Read_DataGridView = new DataGridView();
+            Server_MainPanel = new Panel();
+            Find_Button = new Button();
+            Write_Button = new Button();
+            Server_WritePanel = new Panel();
+            Write_OtherRNbtn = new RadioButton();
+            Write_ExisRNbtn = new RadioButton();
+            Write_Timetxb = new TextBox();
+            Write_datetimepicker = new DateTimePicker();
+            Write_TimeLabel = new Label();
+            Write_DateLabel = new Label();
+            Write_ReasonCombobox = new ComboBox();
+            Write_Reasontxb = new TextBox();
+            Write_Usertxb = new TextBox();
+            Write_ReasonLabel = new Label();
+            Write_UserLabel = new Label();
+            Write_LoadBut = new Button();
+            WriteBut = new Button();
+            Write_ClearBut = new Button();
+            Write_ClearAllBut = new Button();
+            Write_DataGridView = new DataGridView();
             HomeButton = new Button();
             ServerButton = new Button();
             HomePanel = new Panel();
@@ -77,11 +77,11 @@
             Button_Gif = new PictureBox();
             Hide_btn = new PictureBox();
             ServerPanel.SuspendLayout();
+            Server_SearchPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Read_DataGridView).BeginInit();
             Server_MainPanel.SuspendLayout();
             Server_WritePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Write_DataGridView).BeginInit();
-            Server_SearchPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Read_DataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Button_Gif).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Hide_btn).BeginInit();
             SuspendLayout();
@@ -98,270 +98,6 @@
             ServerPanel.Size = new Size(992, 439);
             ServerPanel.TabIndex = 0;
             ServerPanel.Visible = false;
-            // 
-            // Server_MainPanel
-            // 
-            Server_MainPanel.BackColor = Color.FromArgb(48, 96, 130);
-            Server_MainPanel.Controls.Add(Find_Button);
-            Server_MainPanel.Controls.Add(Write_Button);
-            Server_MainPanel.Location = new Point(3, 2);
-            Server_MainPanel.Margin = new Padding(3, 2, 3, 2);
-            Server_MainPanel.Name = "Server_MainPanel";
-            Server_MainPanel.Size = new Size(199, 435);
-            Server_MainPanel.TabIndex = 3;
-            // 
-            // Find_Button
-            // 
-            Find_Button.BackColor = Color.FromArgb(48, 96, 130);
-            Find_Button.BackgroundImage = Properties.Resources.Find_Button_Off;
-            Find_Button.BackgroundImageLayout = ImageLayout.Stretch;
-            Find_Button.FlatAppearance.BorderColor = Color.FromArgb(48, 96, 130);
-            Find_Button.FlatStyle = FlatStyle.Flat;
-            Find_Button.ForeColor = Color.Black;
-            Find_Button.Location = new Point(0, 214);
-            Find_Button.Margin = new Padding(3, 2, 3, 2);
-            Find_Button.Name = "Find_Button";
-            Find_Button.Size = new Size(199, 76);
-            Find_Button.TabIndex = 1;
-            Find_Button.UseVisualStyleBackColor = false;
-            Find_Button.Click += Find_Button_Click;
-            // 
-            // Write_Button
-            // 
-            Write_Button.BackgroundImage = Properties.Resources.Write_Button_On;
-            Write_Button.BackgroundImageLayout = ImageLayout.Stretch;
-            Write_Button.FlatAppearance.BorderColor = Color.FromArgb(48, 96, 130);
-            Write_Button.FlatStyle = FlatStyle.Flat;
-            Write_Button.Location = new Point(0, 139);
-            Write_Button.Margin = new Padding(3, 2, 3, 2);
-            Write_Button.Name = "Write_Button";
-            Write_Button.Size = new Size(199, 76);
-            Write_Button.TabIndex = 0;
-            Write_Button.UseVisualStyleBackColor = true;
-            Write_Button.Click += Write_Button_Click;
-            // 
-            // Server_WritePanel
-            // 
-            Server_WritePanel.BorderStyle = BorderStyle.FixedSingle;
-            Server_WritePanel.Controls.Add(Write_OtherRNbtn);
-            Server_WritePanel.Controls.Add(Write_ExisRNbtn);
-            Server_WritePanel.Controls.Add(Write_Timetxb);
-            Server_WritePanel.Controls.Add(Write_datetimepicker);
-            Server_WritePanel.Controls.Add(Write_TimeLabel);
-            Server_WritePanel.Controls.Add(Write_DateLabel);
-            Server_WritePanel.Controls.Add(Write_ReasonCombobox);
-            Server_WritePanel.Controls.Add(Write_Reasontxb);
-            Server_WritePanel.Controls.Add(Write_Usertxb);
-            Server_WritePanel.Controls.Add(Write_ReasonLabel);
-            Server_WritePanel.Controls.Add(Write_UserLabel);
-            Server_WritePanel.Controls.Add(Write_LoadBut);
-            Server_WritePanel.Controls.Add(WriteBut);
-            Server_WritePanel.Controls.Add(Write_ClearBut);
-            Server_WritePanel.Controls.Add(Write_ClearAllBut);
-            Server_WritePanel.Controls.Add(Write_DataGridView);
-            Server_WritePanel.Location = new Point(208, 3);
-            Server_WritePanel.Name = "Server_WritePanel";
-            Server_WritePanel.Size = new Size(777, 434);
-            Server_WritePanel.TabIndex = 2;
-            // 
-            // Write_OtherRNbtn
-            // 
-            Write_OtherRNbtn.AutoSize = true;
-            Write_OtherRNbtn.Location = new Point(198, 74);
-            Write_OtherRNbtn.Name = "Write_OtherRNbtn";
-            Write_OtherRNbtn.Size = new Size(14, 13);
-            Write_OtherRNbtn.TabIndex = 16;
-            Write_OtherRNbtn.UseVisualStyleBackColor = true;
-            Write_OtherRNbtn.CheckedChanged += Write_OtherRNbtn_CheckedChanged;
-            // 
-            // Write_ExisRNbtn
-            // 
-            Write_ExisRNbtn.AutoSize = true;
-            Write_ExisRNbtn.Checked = true;
-            Write_ExisRNbtn.Location = new Point(198, 45);
-            Write_ExisRNbtn.Name = "Write_ExisRNbtn";
-            Write_ExisRNbtn.Size = new Size(14, 13);
-            Write_ExisRNbtn.TabIndex = 15;
-            Write_ExisRNbtn.TabStop = true;
-            Write_ExisRNbtn.UseVisualStyleBackColor = true;
-            Write_ExisRNbtn.CheckedChanged += Write_ExisRNbtn_CheckedChanged;
-            // 
-            // Write_Timetxb
-            // 
-            Write_Timetxb.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            Write_Timetxb.Location = new Point(218, 161);
-            Write_Timetxb.Name = "Write_Timetxb";
-            Write_Timetxb.PlaceholderText = "00:00";
-            Write_Timetxb.Size = new Size(129, 23);
-            Write_Timetxb.TabIndex = 14;
-            Write_Timetxb.TextAlign = HorizontalAlignment.Center;
-            Write_Timetxb.KeyPress += Write_Timetxb_KeyPress;
-            // 
-            // Write_datetimepicker
-            // 
-            Write_datetimepicker.Format = DateTimePickerFormat.Short;
-            Write_datetimepicker.Location = new Point(13, 162);
-            Write_datetimepicker.Name = "Write_datetimepicker";
-            Write_datetimepicker.Size = new Size(116, 23);
-            Write_datetimepicker.TabIndex = 13;
-            // 
-            // Write_TimeLabel
-            // 
-            Write_TimeLabel.AutoSize = true;
-            Write_TimeLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Write_TimeLabel.ForeColor = Color.ForestGreen;
-            Write_TimeLabel.Location = new Point(257, 137);
-            Write_TimeLabel.Name = "Write_TimeLabel";
-            Write_TimeLabel.Size = new Size(46, 21);
-            Write_TimeLabel.TabIndex = 12;
-            Write_TimeLabel.Text = "Time";
-            // 
-            // Write_DateLabel
-            // 
-            Write_DateLabel.AutoSize = true;
-            Write_DateLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Write_DateLabel.ForeColor = Color.ForestGreen;
-            Write_DateLabel.Location = new Point(45, 137);
-            Write_DateLabel.Name = "Write_DateLabel";
-            Write_DateLabel.Size = new Size(44, 21);
-            Write_DateLabel.TabIndex = 11;
-            Write_DateLabel.Text = "Date";
-            // 
-            // Write_ReasonCombobox
-            // 
-            Write_ReasonCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
-            Write_ReasonCombobox.FormattingEnabled = true;
-            Write_ReasonCombobox.Location = new Point(218, 41);
-            Write_ReasonCombobox.Name = "Write_ReasonCombobox";
-            Write_ReasonCombobox.Size = new Size(129, 23);
-            Write_ReasonCombobox.TabIndex = 10;
-            // 
-            // Write_Reasontxb
-            // 
-            Write_Reasontxb.Enabled = false;
-            Write_Reasontxb.Location = new Point(218, 70);
-            Write_Reasontxb.Name = "Write_Reasontxb";
-            Write_Reasontxb.PlaceholderText = "Other option";
-            Write_Reasontxb.Size = new Size(129, 23);
-            Write_Reasontxb.TabIndex = 9;
-            Write_Reasontxb.Tag = "";
-            // 
-            // Write_Usertxb
-            // 
-            Write_Usertxb.Location = new Point(13, 41);
-            Write_Usertxb.Name = "Write_Usertxb";
-            Write_Usertxb.PlaceholderText = "Username";
-            Write_Usertxb.Size = new Size(116, 23);
-            Write_Usertxb.TabIndex = 8;
-            // 
-            // Write_ReasonLabel
-            // 
-            Write_ReasonLabel.AutoSize = true;
-            Write_ReasonLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Write_ReasonLabel.ForeColor = Color.ForestGreen;
-            Write_ReasonLabel.Location = new Point(249, 17);
-            Write_ReasonLabel.Name = "Write_ReasonLabel";
-            Write_ReasonLabel.Size = new Size(63, 21);
-            Write_ReasonLabel.TabIndex = 7;
-            Write_ReasonLabel.Text = "Reason";
-            // 
-            // Write_UserLabel
-            // 
-            Write_UserLabel.AutoSize = true;
-            Write_UserLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Write_UserLabel.ForeColor = Color.ForestGreen;
-            Write_UserLabel.Location = new Point(42, 17);
-            Write_UserLabel.Name = "Write_UserLabel";
-            Write_UserLabel.Size = new Size(43, 21);
-            Write_UserLabel.TabIndex = 6;
-            Write_UserLabel.Text = "User";
-            // 
-            // Write_LoadBut
-            // 
-            Write_LoadBut.BackColor = Color.DarkGreen;
-            Write_LoadBut.Cursor = Cursors.Hand;
-            Write_LoadBut.FlatAppearance.BorderColor = Color.DarkGreen;
-            Write_LoadBut.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
-            Write_LoadBut.FlatStyle = FlatStyle.Flat;
-            Write_LoadBut.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            Write_LoadBut.ForeColor = Color.White;
-            Write_LoadBut.Location = new Point(92, 297);
-            Write_LoadBut.Name = "Write_LoadBut";
-            Write_LoadBut.Size = new Size(200, 27);
-            Write_LoadBut.TabIndex = 5;
-            Write_LoadBut.Text = "Load";
-            Write_LoadBut.UseVisualStyleBackColor = false;
-            Write_LoadBut.Click += Write_LoadBut_Click;
-            // 
-            // WriteBut
-            // 
-            WriteBut.BackColor = Color.DarkGreen;
-            WriteBut.Cursor = Cursors.Hand;
-            WriteBut.FlatAppearance.BorderColor = Color.DarkGreen;
-            WriteBut.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
-            WriteBut.FlatStyle = FlatStyle.Flat;
-            WriteBut.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            WriteBut.ForeColor = Color.White;
-            WriteBut.Location = new Point(92, 330);
-            WriteBut.Name = "WriteBut";
-            WriteBut.Size = new Size(200, 27);
-            WriteBut.TabIndex = 4;
-            WriteBut.Text = "Write";
-            WriteBut.UseVisualStyleBackColor = false;
-            WriteBut.Click += WriteBut_Click;
-            // 
-            // Write_ClearBut
-            // 
-            Write_ClearBut.BackColor = Color.DarkGreen;
-            Write_ClearBut.Cursor = Cursors.Hand;
-            Write_ClearBut.FlatAppearance.BorderColor = Color.DarkGreen;
-            Write_ClearBut.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
-            Write_ClearBut.FlatStyle = FlatStyle.Flat;
-            Write_ClearBut.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            Write_ClearBut.ForeColor = Color.White;
-            Write_ClearBut.Location = new Point(92, 363);
-            Write_ClearBut.Name = "Write_ClearBut";
-            Write_ClearBut.Size = new Size(200, 27);
-            Write_ClearBut.TabIndex = 3;
-            Write_ClearBut.Text = "Clear";
-            Write_ClearBut.UseVisualStyleBackColor = false;
-            Write_ClearBut.Click += Write_ClearBut_Click;
-            // 
-            // Write_ClearAllBut
-            // 
-            Write_ClearAllBut.BackColor = Color.DarkGreen;
-            Write_ClearAllBut.Cursor = Cursors.Hand;
-            Write_ClearAllBut.FlatAppearance.BorderColor = Color.DarkGreen;
-            Write_ClearAllBut.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
-            Write_ClearAllBut.FlatStyle = FlatStyle.Flat;
-            Write_ClearAllBut.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            Write_ClearAllBut.ForeColor = Color.White;
-            Write_ClearAllBut.Location = new Point(92, 396);
-            Write_ClearAllBut.Name = "Write_ClearAllBut";
-            Write_ClearAllBut.Size = new Size(200, 27);
-            Write_ClearAllBut.TabIndex = 2;
-            Write_ClearAllBut.Text = "Clear all";
-            Write_ClearAllBut.UseVisualStyleBackColor = false;
-            Write_ClearAllBut.Click += Write_ClearAllBut_Click;
-            // 
-            // Write_DataGridView
-            // 
-            Write_DataGridView.AllowUserToAddRows = false;
-            Write_DataGridView.AllowUserToDeleteRows = false;
-            Write_DataGridView.BackgroundColor = SystemColors.ActiveCaptionText;
-            Write_DataGridView.BorderStyle = BorderStyle.Fixed3D;
-            Write_DataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Write_DataGridView.GridColor = SystemColors.GradientActiveCaption;
-            Write_DataGridView.Location = new Point(367, 3);
-            Write_DataGridView.Margin = new Padding(3, 2, 3, 2);
-            Write_DataGridView.Name = "Write_DataGridView";
-            Write_DataGridView.RowHeadersVisible = false;
-            Write_DataGridView.RowHeadersWidth = 51;
-            Write_DataGridView.RowTemplate.Height = 29;
-            Write_DataGridView.ScrollBars = ScrollBars.Vertical;
-            Write_DataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            Write_DataGridView.Size = new Size(410, 428);
-            Write_DataGridView.TabIndex = 1;
             // 
             // Server_SearchPanel
             // 
@@ -629,6 +365,270 @@
             Read_DataGridView.Size = new Size(479, 428);
             Read_DataGridView.TabIndex = 0;
             // 
+            // Server_MainPanel
+            // 
+            Server_MainPanel.BackColor = Color.FromArgb(48, 96, 130);
+            Server_MainPanel.Controls.Add(Find_Button);
+            Server_MainPanel.Controls.Add(Write_Button);
+            Server_MainPanel.Location = new Point(3, 2);
+            Server_MainPanel.Margin = new Padding(3, 2, 3, 2);
+            Server_MainPanel.Name = "Server_MainPanel";
+            Server_MainPanel.Size = new Size(199, 435);
+            Server_MainPanel.TabIndex = 3;
+            // 
+            // Find_Button
+            // 
+            Find_Button.BackColor = Color.FromArgb(48, 96, 130);
+            Find_Button.BackgroundImage = Properties.Resources.Find_Button_Off;
+            Find_Button.BackgroundImageLayout = ImageLayout.Stretch;
+            Find_Button.FlatAppearance.BorderColor = Color.FromArgb(48, 96, 130);
+            Find_Button.FlatStyle = FlatStyle.Flat;
+            Find_Button.ForeColor = Color.Black;
+            Find_Button.Location = new Point(0, 214);
+            Find_Button.Margin = new Padding(3, 2, 3, 2);
+            Find_Button.Name = "Find_Button";
+            Find_Button.Size = new Size(199, 76);
+            Find_Button.TabIndex = 1;
+            Find_Button.UseVisualStyleBackColor = false;
+            Find_Button.Click += Find_Button_Click;
+            // 
+            // Write_Button
+            // 
+            Write_Button.BackgroundImage = Properties.Resources.Write_Button_On;
+            Write_Button.BackgroundImageLayout = ImageLayout.Stretch;
+            Write_Button.FlatAppearance.BorderColor = Color.FromArgb(48, 96, 130);
+            Write_Button.FlatStyle = FlatStyle.Flat;
+            Write_Button.Location = new Point(0, 139);
+            Write_Button.Margin = new Padding(3, 2, 3, 2);
+            Write_Button.Name = "Write_Button";
+            Write_Button.Size = new Size(199, 76);
+            Write_Button.TabIndex = 0;
+            Write_Button.UseVisualStyleBackColor = true;
+            Write_Button.Click += Write_Button_Click;
+            // 
+            // Server_WritePanel
+            // 
+            Server_WritePanel.BorderStyle = BorderStyle.FixedSingle;
+            Server_WritePanel.Controls.Add(Write_OtherRNbtn);
+            Server_WritePanel.Controls.Add(Write_ExisRNbtn);
+            Server_WritePanel.Controls.Add(Write_Timetxb);
+            Server_WritePanel.Controls.Add(Write_datetimepicker);
+            Server_WritePanel.Controls.Add(Write_TimeLabel);
+            Server_WritePanel.Controls.Add(Write_DateLabel);
+            Server_WritePanel.Controls.Add(Write_ReasonCombobox);
+            Server_WritePanel.Controls.Add(Write_Reasontxb);
+            Server_WritePanel.Controls.Add(Write_Usertxb);
+            Server_WritePanel.Controls.Add(Write_ReasonLabel);
+            Server_WritePanel.Controls.Add(Write_UserLabel);
+            Server_WritePanel.Controls.Add(Write_LoadBut);
+            Server_WritePanel.Controls.Add(WriteBut);
+            Server_WritePanel.Controls.Add(Write_ClearBut);
+            Server_WritePanel.Controls.Add(Write_ClearAllBut);
+            Server_WritePanel.Controls.Add(Write_DataGridView);
+            Server_WritePanel.Location = new Point(208, 3);
+            Server_WritePanel.Name = "Server_WritePanel";
+            Server_WritePanel.Size = new Size(777, 434);
+            Server_WritePanel.TabIndex = 2;
+            // 
+            // Write_OtherRNbtn
+            // 
+            Write_OtherRNbtn.AutoSize = true;
+            Write_OtherRNbtn.Location = new Point(198, 74);
+            Write_OtherRNbtn.Name = "Write_OtherRNbtn";
+            Write_OtherRNbtn.Size = new Size(14, 13);
+            Write_OtherRNbtn.TabIndex = 16;
+            Write_OtherRNbtn.UseVisualStyleBackColor = true;
+            Write_OtherRNbtn.CheckedChanged += Write_OtherRNbtn_CheckedChanged;
+            // 
+            // Write_ExisRNbtn
+            // 
+            Write_ExisRNbtn.AutoSize = true;
+            Write_ExisRNbtn.Checked = true;
+            Write_ExisRNbtn.Location = new Point(198, 45);
+            Write_ExisRNbtn.Name = "Write_ExisRNbtn";
+            Write_ExisRNbtn.Size = new Size(14, 13);
+            Write_ExisRNbtn.TabIndex = 15;
+            Write_ExisRNbtn.TabStop = true;
+            Write_ExisRNbtn.UseVisualStyleBackColor = true;
+            Write_ExisRNbtn.CheckedChanged += Write_ExisRNbtn_CheckedChanged;
+            // 
+            // Write_Timetxb
+            // 
+            Write_Timetxb.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            Write_Timetxb.Location = new Point(218, 161);
+            Write_Timetxb.Name = "Write_Timetxb";
+            Write_Timetxb.PlaceholderText = "00:00";
+            Write_Timetxb.Size = new Size(129, 23);
+            Write_Timetxb.TabIndex = 14;
+            Write_Timetxb.TextAlign = HorizontalAlignment.Center;
+            Write_Timetxb.KeyPress += Write_Timetxb_KeyPress;
+            // 
+            // Write_datetimepicker
+            // 
+            Write_datetimepicker.Format = DateTimePickerFormat.Short;
+            Write_datetimepicker.Location = new Point(13, 162);
+            Write_datetimepicker.Name = "Write_datetimepicker";
+            Write_datetimepicker.Size = new Size(116, 23);
+            Write_datetimepicker.TabIndex = 13;
+            // 
+            // Write_TimeLabel
+            // 
+            Write_TimeLabel.AutoSize = true;
+            Write_TimeLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Write_TimeLabel.ForeColor = Color.ForestGreen;
+            Write_TimeLabel.Location = new Point(257, 137);
+            Write_TimeLabel.Name = "Write_TimeLabel";
+            Write_TimeLabel.Size = new Size(46, 21);
+            Write_TimeLabel.TabIndex = 12;
+            Write_TimeLabel.Text = "Time";
+            // 
+            // Write_DateLabel
+            // 
+            Write_DateLabel.AutoSize = true;
+            Write_DateLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Write_DateLabel.ForeColor = Color.ForestGreen;
+            Write_DateLabel.Location = new Point(45, 137);
+            Write_DateLabel.Name = "Write_DateLabel";
+            Write_DateLabel.Size = new Size(44, 21);
+            Write_DateLabel.TabIndex = 11;
+            Write_DateLabel.Text = "Date";
+            // 
+            // Write_ReasonCombobox
+            // 
+            Write_ReasonCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
+            Write_ReasonCombobox.FormattingEnabled = true;
+            Write_ReasonCombobox.Location = new Point(218, 41);
+            Write_ReasonCombobox.Name = "Write_ReasonCombobox";
+            Write_ReasonCombobox.Size = new Size(129, 23);
+            Write_ReasonCombobox.TabIndex = 10;
+            // 
+            // Write_Reasontxb
+            // 
+            Write_Reasontxb.Enabled = false;
+            Write_Reasontxb.Location = new Point(218, 70);
+            Write_Reasontxb.Name = "Write_Reasontxb";
+            Write_Reasontxb.PlaceholderText = "Other option";
+            Write_Reasontxb.Size = new Size(129, 23);
+            Write_Reasontxb.TabIndex = 9;
+            Write_Reasontxb.Tag = "";
+            // 
+            // Write_Usertxb
+            // 
+            Write_Usertxb.Location = new Point(13, 41);
+            Write_Usertxb.Name = "Write_Usertxb";
+            Write_Usertxb.PlaceholderText = "Username";
+            Write_Usertxb.Size = new Size(116, 23);
+            Write_Usertxb.TabIndex = 8;
+            // 
+            // Write_ReasonLabel
+            // 
+            Write_ReasonLabel.AutoSize = true;
+            Write_ReasonLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Write_ReasonLabel.ForeColor = Color.ForestGreen;
+            Write_ReasonLabel.Location = new Point(249, 17);
+            Write_ReasonLabel.Name = "Write_ReasonLabel";
+            Write_ReasonLabel.Size = new Size(63, 21);
+            Write_ReasonLabel.TabIndex = 7;
+            Write_ReasonLabel.Text = "Reason";
+            // 
+            // Write_UserLabel
+            // 
+            Write_UserLabel.AutoSize = true;
+            Write_UserLabel.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Write_UserLabel.ForeColor = Color.ForestGreen;
+            Write_UserLabel.Location = new Point(42, 17);
+            Write_UserLabel.Name = "Write_UserLabel";
+            Write_UserLabel.Size = new Size(43, 21);
+            Write_UserLabel.TabIndex = 6;
+            Write_UserLabel.Text = "User";
+            // 
+            // Write_LoadBut
+            // 
+            Write_LoadBut.BackColor = Color.DarkGreen;
+            Write_LoadBut.Cursor = Cursors.Hand;
+            Write_LoadBut.FlatAppearance.BorderColor = Color.DarkGreen;
+            Write_LoadBut.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
+            Write_LoadBut.FlatStyle = FlatStyle.Flat;
+            Write_LoadBut.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Write_LoadBut.ForeColor = Color.White;
+            Write_LoadBut.Location = new Point(92, 297);
+            Write_LoadBut.Name = "Write_LoadBut";
+            Write_LoadBut.Size = new Size(200, 27);
+            Write_LoadBut.TabIndex = 5;
+            Write_LoadBut.Text = "Load";
+            Write_LoadBut.UseVisualStyleBackColor = false;
+            Write_LoadBut.Click += Write_LoadBut_Click;
+            // 
+            // WriteBut
+            // 
+            WriteBut.BackColor = Color.DarkGreen;
+            WriteBut.Cursor = Cursors.Hand;
+            WriteBut.FlatAppearance.BorderColor = Color.DarkGreen;
+            WriteBut.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
+            WriteBut.FlatStyle = FlatStyle.Flat;
+            WriteBut.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            WriteBut.ForeColor = Color.White;
+            WriteBut.Location = new Point(92, 330);
+            WriteBut.Name = "WriteBut";
+            WriteBut.Size = new Size(200, 27);
+            WriteBut.TabIndex = 4;
+            WriteBut.Text = "Write";
+            WriteBut.UseVisualStyleBackColor = false;
+            WriteBut.Click += WriteBut_Click;
+            // 
+            // Write_ClearBut
+            // 
+            Write_ClearBut.BackColor = Color.DarkGreen;
+            Write_ClearBut.Cursor = Cursors.Hand;
+            Write_ClearBut.FlatAppearance.BorderColor = Color.DarkGreen;
+            Write_ClearBut.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
+            Write_ClearBut.FlatStyle = FlatStyle.Flat;
+            Write_ClearBut.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Write_ClearBut.ForeColor = Color.White;
+            Write_ClearBut.Location = new Point(92, 363);
+            Write_ClearBut.Name = "Write_ClearBut";
+            Write_ClearBut.Size = new Size(200, 27);
+            Write_ClearBut.TabIndex = 3;
+            Write_ClearBut.Text = "Clear";
+            Write_ClearBut.UseVisualStyleBackColor = false;
+            Write_ClearBut.Click += Write_ClearBut_Click;
+            // 
+            // Write_ClearAllBut
+            // 
+            Write_ClearAllBut.BackColor = Color.DarkGreen;
+            Write_ClearAllBut.Cursor = Cursors.Hand;
+            Write_ClearAllBut.FlatAppearance.BorderColor = Color.DarkGreen;
+            Write_ClearAllBut.FlatAppearance.MouseOverBackColor = Color.DarkSlateGray;
+            Write_ClearAllBut.FlatStyle = FlatStyle.Flat;
+            Write_ClearAllBut.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Write_ClearAllBut.ForeColor = Color.White;
+            Write_ClearAllBut.Location = new Point(92, 396);
+            Write_ClearAllBut.Name = "Write_ClearAllBut";
+            Write_ClearAllBut.Size = new Size(200, 27);
+            Write_ClearAllBut.TabIndex = 2;
+            Write_ClearAllBut.Text = "Clear all";
+            Write_ClearAllBut.UseVisualStyleBackColor = false;
+            Write_ClearAllBut.Click += Write_ClearAllBut_Click;
+            // 
+            // Write_DataGridView
+            // 
+            Write_DataGridView.AllowUserToAddRows = false;
+            Write_DataGridView.AllowUserToDeleteRows = false;
+            Write_DataGridView.BackgroundColor = SystemColors.ActiveCaptionText;
+            Write_DataGridView.BorderStyle = BorderStyle.Fixed3D;
+            Write_DataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Write_DataGridView.GridColor = SystemColors.GradientActiveCaption;
+            Write_DataGridView.Location = new Point(367, 3);
+            Write_DataGridView.Margin = new Padding(3, 2, 3, 2);
+            Write_DataGridView.Name = "Write_DataGridView";
+            Write_DataGridView.RowHeadersVisible = false;
+            Write_DataGridView.RowHeadersWidth = 51;
+            Write_DataGridView.RowTemplate.Height = 29;
+            Write_DataGridView.ScrollBars = ScrollBars.Vertical;
+            Write_DataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            Write_DataGridView.Size = new Size(410, 428);
+            Write_DataGridView.TabIndex = 1;
+            // 
             // HomeButton
             // 
             HomeButton.BackgroundImage = Properties.Resources.Home_Button_On;
@@ -730,13 +730,13 @@
             Load += Form1_Load;
             MouseDown += Form1_MouseDown;
             ServerPanel.ResumeLayout(false);
+            Server_SearchPanel.ResumeLayout(false);
+            Server_SearchPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)Read_DataGridView).EndInit();
             Server_MainPanel.ResumeLayout(false);
             Server_WritePanel.ResumeLayout(false);
             Server_WritePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Write_DataGridView).EndInit();
-            Server_SearchPanel.ResumeLayout(false);
-            Server_SearchPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)Read_DataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)Button_Gif).EndInit();
             ((System.ComponentModel.ISupportInitialize)Hide_btn).EndInit();
             ResumeLayout(false);
